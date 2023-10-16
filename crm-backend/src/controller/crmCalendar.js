@@ -60,61 +60,6 @@ const getCrmCalendarData = async (req, res, next) => {
   }
 }
 
-
-
-//below is updateCrmCalendarData
-
-// const updateCrmCalendarData = async (req, res, next) => {
-//   console.log("updateCrmCalendarData API called");
-
-//   const {
-//     organization,
-//     contactTitle,
-//     phoneNumber,
-//     emailAddress,
-//     meetingSubject,
-//     clientPOC,
-//     status,
-//     date,
-//     time,
-//     additionalNotes
-//   } = req.body;
-//   console.log(organization)
-
-//   try {
-//     // Find the existing crmCalendar entry by organization or any other unique identifier
-//     const existingCrmCalendar = await crmCalendar.findOne({ organization: organization });
-//     // console.log(existingCrmCalendar)
-
-//     if (existingCrmCalendar) {
-//       // Update the fields with the new values
-//       existingCrmCalendar.contactTitle = contactTitle;
-//       existingCrmCalendar.phoneNumber = phoneNumber;
-//       existingCrmCalendar.emailAddress = emailAddress;
-//       existingCrmCalendar.meetingSubject = meetingSubject;
-//       existingCrmCalendar.clientPOC = clientPOC;
-//       existingCrmCalendar.status = status;
-//       existingCrmCalendar.date = date;
-//       existingCrmCalendar.time = time;
-//       existingCrmCalendar.additionalNotes = additionalNotes;
-
-//       try {
-//         // Save the updated crmCalendar entry
-//         await existingCrmCalendar.save();
-//         res.status(200).json({ message: "The CRM calendar data has been successfully updated." });
-//       } catch (error) {
-//         res.status(500).send(error);
-//       }
-//     } else {
-//       res.status(404).json({ message: "The CRM calendar data could not be found." });
-//     }
-//   } catch (error) {
-//     console.error('Error updating crmCalendar data:', error);
-//     throw error;
-//   }
-// };
-
-
 const updateCrmCalendarData = async (req, res, next) => {
   console.log("updateCrmCalendarData API called");
 
