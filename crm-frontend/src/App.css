@@ -1,0 +1,50 @@
+.navbar {
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin-right: 10px;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.nav-link:hover {
+  background-color: #ddd;
+}
+
+.table-row-color-0 {
+  background-color: #f8c291;
+}
+
+.table-row-color-1 {
+  background-color: #6ab04c;
+}
+
+.table-row-color-2 {
+  background-color: #82ccdd;
+}
+
+/* Add more color classes as needed */
+
+/* below is Home.jsx style */
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.subject-field {
+  color: black;
+}
