@@ -1,68 +1,7 @@
 const { sendEmail } = require("../utilities/emailUtils");
+const { sendEmailsToMultipleRecipients } = require("../utilities/emailUtils");
 const scheduledEmailSchema = require("../models/emailSchema");
 const crmCalendar = require("../models/crmCalendar");
-
-// const sendEmailController = async (req, res) => {
-//   console.log("The sendEmailController API hit");
-//   const { recipient, subject, message, scheduledSendTime } = req.body;
-
-//   // Convert scheduledSendTime to Afghanistan time
-//   const scheduledTime = new Date(scheduledSendTime);
-//   const timeZone = "Asia/Kabul";
-//   const options = { timeZone: timeZone };
-//   const convertedScheduledTime = scheduledTime.toLocaleString("en-US", options);
-
-//   // Output the converted time
-//   console.log("Scheduled Send Time (Afghanistan Time):", convertedScheduledTime);
-//   console.log("scheduledSendTime =", convertedScheduledTime);
-
-//   if(!scheduledSendTime){
-
-//   }
-
-//   try {
-//     if (scheduledSendTime) {
-//       const scheduledTime = new Date(convertedScheduledTime);
-//       const currentTime = new Date();
-
-//       if (scheduledTime > currentTime) {
-//         const delay = scheduledTime.getTime() - currentTime.getTime();
-
-//         // Save scheduled email to the database
-//         const newScheduledEmail = new scheduledEmailSchema({
-//           recipient,
-//           subject,
-//           message,
-//           scheduledSendTime: scheduledTime
-//         });
-//         await newScheduledEmail.save();
-
-//         setTimeout(async () => {
-//           try {
-//             await sendEmail(recipient, subject, message);
-//             console.log('Email sent at:', new Date());
-//           } catch (error) {
-//             console.log('Error occurred while sending email:', error);
-//           }
-//         }, delay);
-
-//         res.status(200).json({ message: `Your email has been scheduled to be sent at ${convertedScheduledTime}. Thank you.` });
-//       } else {
-//         //below line sends the email
-//         await sendEmail(recipient, subject, message);
-//         console.log('Email sent immediately at:', new Date());
-//         res.status(200).json({ message: 'Your email has been sent immediately. Thank you.' });
-//       }
-//     } else {
-//       await sendEmail(recipient, subject, message);
-//       console.log('Email sent immediately at:', new Date());
-//       res.status(200).json({ message: 'Your email has been sent immediately. Thank you.' });
-//     }
-//   } catch (error) {
-//     console.log('Error occurred while sending email:', error);
-//     res.status(500).json({ error: 'Failed to send email' });
-//   }
-// };
 
 const sendEmailController = async (req, res) => {
   console.log("The sendEmailController API hit");
@@ -75,6 +14,7 @@ const sendEmailController = async (req, res) => {
     lastName,
     email,
   } = req.body;
+  console.log("recipient=" + recipient);
   const senderEmail = email;
   console.log("senderEmail = " + senderEmail);
   console.log("scheduledSendTime= " + scheduledSendTime + "");
@@ -125,25 +65,29 @@ const sendEmailController = async (req, res) => {
             const reminderMessage = `Subject: Friendly Reminder: Email Scheduled in 15 Minutes
 
             Dear ${senderName},
-            
+
             I hope this email finds you well. I'm reaching out to remind you about an important email that you have scheduled to be sent to ${recipient} in just 15 minutes.
-            
+
             As the designated time approaches, I wanted to ensure that you are prepared and ready to deliver your message effectively. Here are a few key details to keep in mind:
-            
+
             Recipient: ${recipient}
             Scheduled Time:  ${scheduledSendTime}
             Subject: ${subject}
-            
+
             Please take a moment to review the content of the email to ensure its accuracy and clarity. Double-check any attachments or links that need to be included, as well as the overall tone and message you wish to convey.
-            
+
             If you have any last-minute changes or updates to make, now is the perfect time to do so. Your attention to detail will greatly contribute to the success of your communication.
-            
+
             Should you require any assistance or have any questions, please feel free to reach out to me. I'm here to support you in any way I can.
-            
+
             Thank you for your time and dedication to effective communication. Good luck with your email, and I trust it will have a positive impact on ${recipient}.
-            
+
             Best regards,`;
-            await sendEmail(senderEmail, reminderSubject, reminderMessage);
+            await sendEmailsToMultipleRecipients(
+              senderEmail,
+              reminderSubject,
+              reminderMessage
+            );
             console.log("Reminder email sent at:", new Date());
           } catch (error) {
             console.log("Error occurred while sending reminder email:", error);
@@ -157,19 +101,19 @@ const sendEmailController = async (req, res) => {
             const senderName = `${firstName} ${lastName}`; // Replace with the actual sender's name
             const secondReminderSubject = "Second Reminder: " + subject;
             const secondReminderMessage = `Subject: Friendly Reminder: Email Scheduled in 1 Day
-        
+
             Dear ${senderName},
-            
+
             This is a friendly reminder about an important email that you have scheduled to be sent to ${recipient} in 1 day.
-            
+
             Recipient: ${recipient}
             Scheduled Time:  ${scheduledSendTime}
             Subject: ${subject}
-            
+
             Please review the content of the email and make any necessary changes or updates. Ensure that all attachments or links are included and that the overall message is clear and effective.
-            
+
             Best regards,`;
-            await sendEmail(
+            await sendEmailsToMultipleRecipients(
               senderEmail,
               secondReminderSubject,
               secondReminderMessage
@@ -188,7 +132,7 @@ const sendEmailController = async (req, res) => {
         setTimeout(async () => {
           try {
             // Send scheduled email
-            await sendEmail(recipient, subject, message);
+            await sendEmailsToMultipleRecipients(recipient, subject, message);
             console.log("Email sent at:", new Date());
           } catch (error) {
             console.log("Error occurred while sending email:", error);
@@ -200,14 +144,14 @@ const sendEmailController = async (req, res) => {
         });
       } else {
         // below line sends the email
-        await sendEmail(recipient, subject, message);
+        await sendEmailsToMultipleRecipients(recipient, subject, message);
         console.log("Email sent immediately at:", new Date());
         res.status(200).json({
           message: "Your email has been sent immediately. Thank you.",
         });
       }
     } else {
-      await sendEmail(recipient, subject, message);
+      await sendEmailsToMultipleRecipients(recipient, subject, message);
       console.log("Email sent immediately at:", new Date());
       res
         .status(200)
@@ -218,8 +162,6 @@ const sendEmailController = async (req, res) => {
     res.status(500).json({ error: "Failed to send email" });
   }
 };
-
-//
 
 //fetch emails
 const moment = require("moment-timezone");
@@ -370,9 +312,8 @@ const allEmails = async (req, res, next) => {
   } catch (error) {
     console.log("Error occurred while fetching all emails:", error);
     res.status(500).json({ error: "Failed to fetch emails" });
-    
   }
-}
+};
 
 //
 
