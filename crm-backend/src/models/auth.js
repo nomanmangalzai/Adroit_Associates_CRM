@@ -4,15 +4,12 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  email: { type: String , unique: true},
+  email: { type: String, unique: true },
   password: { type: String },
-  isAdmin: {
+  userRole: {
     type: String,
-    default: 'false'
+    default: "user",
   },
-
 });
-
-
 
 module.exports = mongoose.model("User", userSchema);
