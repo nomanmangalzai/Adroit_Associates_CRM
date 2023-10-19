@@ -322,6 +322,8 @@ const EmailForm = () => {
   //   }
   // };
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    const token = localStorage.getItem("token");
+
     try {
       const userData = JSON.parse(localStorage.getItem("userData"));
       const { firstName, lastName, email } = userData;
@@ -337,6 +339,7 @@ const EmailForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...updatedValues,
@@ -376,8 +379,15 @@ const EmailForm = () => {
   });
 
   const handleSelectAllEmails = async (setFieldValue) => {
+    const token = localStorage.getItem("token");
+
     try {
-      const response = await fetch("http://localhost:5000/email/all-emails");
+      const response = await fetch("http://localhost:5000/email/all-emails", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.ok) {
         const data = await response.json();
         const emails = data.map((obj) => obj.emailAddress);

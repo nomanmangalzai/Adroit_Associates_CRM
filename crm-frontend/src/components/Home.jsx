@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "../App.css";
 
@@ -20,9 +20,17 @@ const CrmCalendarData = () => {
   };
 
   const fetchCrmData = async () => {
+    const token = localStorage.getItem("token");
+
     try {
       const response = await fetch(
-        "http://localhost:5000/crm-calendar/get-crm-calendar-data"
+        "http://localhost:5000/crm-calendar/get-crm-calendar-data",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (response.ok) {
         const data = await response.json();
@@ -41,6 +49,8 @@ const CrmCalendarData = () => {
   };
 
   const handleDeleteClick = async (index) => {
+    const token = localStorage.getItem("token");
+
     const itemToDelete = crmData[index];
 
     try {
@@ -50,6 +60,7 @@ const CrmCalendarData = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(itemToDelete),
         }
@@ -68,6 +79,8 @@ const CrmCalendarData = () => {
   };
 
   const handleStatusChange = async (index, value) => {
+    const token = localStorage.getItem("token");
+
     const updatedCrmData = [...crmData];
     updatedCrmData[index].status = value;
     setCrmData(updatedCrmData);
@@ -79,6 +92,7 @@ const CrmCalendarData = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedCrmData[index]), // Send the entire data object
         }
@@ -99,6 +113,8 @@ const CrmCalendarData = () => {
   };
 
   const handleSaveClick = async (index) => {
+    const token = localStorage.getItem("token");
+
     const updatedCrmData = [...crmData];
     updatedCrmData[index].isEditable = false;
     setCrmData(updatedCrmData);
@@ -110,6 +126,7 @@ const CrmCalendarData = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedCrmData[index]), // Send the entire data object
         }
@@ -124,13 +141,12 @@ const CrmCalendarData = () => {
   };
 
   //
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleEmailClick = (emailAddress, date, time) => {
     // Perform any necessary actions with the email, date, and time
 
     // Assuming you are using React Router, you can use the history object to navigate
-    history.push({
-      pathname: "/email-form",
+    navigate("/email-form", {
       state: {
         emailAddress,
         date,
@@ -149,7 +165,6 @@ const CrmCalendarData = () => {
 
   return (
     <div className="crm-calendar-container">
-      {" "}
       {/* Add a class to the parent container */}
       <h1 className="text-danger">CRM Calendar Data</h1>
       <Table striped bordered hover>

@@ -1,6 +1,13 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
+import {
+  BrowserRouter,
+  Link,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
@@ -8,12 +15,17 @@ import EmailForm from "./components/composeEmail";
 import EmailList from "./components/scheduledEmails";
 import EmailHistory from "./components/EmailHistory";
 import SaveCrmCalendarData from "./components/SaveCrmCalendarData";
-import signUpPermission from "./components/signUpPermission";
+import SignUpPermission from "./components/SignUpPermission";
 import Learn from "./components/Learn";
+
+//importing privateRoutes file
+import PrivateRoutes from "./utils/PrivateRoutes";
+
 import "./App.css";
 import { Button } from "react-bootstrap";
 
 function App() {
+  const navigate = useNavigate();
   const storedToken = localStorage.getItem("token");
   const [isLoggedIn, setIsLoggedIn] = useState(!!storedToken);
   useEffect(() => {
@@ -27,16 +39,12 @@ function App() {
   };
 
   const handleLogin = () => {
-    localStorage.setItem("token", "yourToken"); // Replace 'yourToken' with the actual token
+    localStorage.setItem("token", storedToken); // Replace 'yourToken' with the actual token
     setIsLoggedIn(true);
   };
 
   return (
-    <BrowserRouter>
-      <Route exact path="/">
-        {isLoggedIn ? <Redirect to="/home-page" /> : <Redirect to="/sign-in" />}
-      </Route>
-
+    <>
       <nav className="navbar">
         <ul className="nav-links">
           {isLoggedIn && (
@@ -96,36 +104,46 @@ function App() {
           )}
         </ul>
       </nav>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/home-page" />
+            ) : (
+              <Navigate to="/sign-in" />
+            )
+          }
+        />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn onLogin={handleLogin} />} />
 
-      <Route exact path="/sign-up" component={SignUp} />
-      <Route
-        exact
-        path="/sign-in"
-        render={() => <SignIn onLogin={handleLogin} />}
-      />
+        {isLoggedIn && (
+          <>
+            <Route path="/home-page" element={<Home />} />
+            <Route path="/email-form" element={<EmailForm />} />
+            <Route path="/show-scheduled-emails" element={<EmailList />} />
+            <Route path="/show-emails-history" element={<EmailHistory />} />
+            <Route
+              path="/save-crm-calendar-data"
+              element={<SaveCrmCalendarData />}
+            />
 
-      {isLoggedIn && (
-        <>
-          <Route path="/home-page" component={Home} />
-          <Route exact path="/email-form" component={EmailForm} />
-          <Route exact path="/show-scheduled-emails" component={EmailList} />
-          <Route exact path="/show-emails-history" component={EmailHistory} />
+            <Route path="/learn" element={<Learn />} />
+          </>
+        )}
+        <Route
+          path="/"
+          element={isLoggedIn ? <Home /> : <Navigate to="/sign-in" />}
+        />
+        <Route element={<PrivateRoutes />}>
           <Route
-            exact
-            path="/save-crm-calendar-data"
-            component={SaveCrmCalendarData}
-          />
-          <Route
-            exact
+            element={<SignUpPermission />}
             path="/accept-user-account-request"
-            component={signUpPermission}
           />
-          <Route path="/learn" component={Learn} />
-        </>
-      )}
-
-      {!isLoggedIn && <Redirect to="/sign-in" />}
-    </BrowserRouter>
+        </Route>
+      </Routes>
+    </>
   );
 }
 

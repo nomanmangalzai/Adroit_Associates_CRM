@@ -139,6 +139,7 @@ const signIn = async (req, res, next) => {
     let userInfo = await users.findOne({ email: email }).select("-password");
     jwt.sign(payload, secret, { expiresIn: "5 days" }, (err, token) => {
       if (err) throw err;
+      console.log(token);
       res.json({
         token,
         User: userInfo,
@@ -198,12 +199,10 @@ const userAccountRequest = async (req, res, next) => {
   //save the user
   try {
     await newAccountRequest.save();
-    res
-      .status(201)
-      .json({
-        message:
-          "Your account request has been sent to our admin, kindly wait for confirmation",
-      });
+    res.status(201).json({
+      message:
+        "Your account request has been sent to our admin, kindly wait for confirmation",
+    });
   } catch (error) {
     res.status(500).send(error);
   }
