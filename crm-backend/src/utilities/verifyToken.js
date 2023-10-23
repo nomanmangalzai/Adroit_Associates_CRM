@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
 
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  console.log("token=" + token);
+  // console.log("token=" + token);
 
   if (!token)
     return res.status(403).send({ auth: false, message: "No token provided." });

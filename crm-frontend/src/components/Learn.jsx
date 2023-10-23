@@ -1,8 +1,11 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  const { admin } = useSelector((state) => state.admin); // Change admin state to
+
   // Define the initial form values
   const initialValues = {
     email: "",
@@ -25,34 +28,7 @@ const Login = () => {
 
   return (
     <div>
-      <h1>Login</h1>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div>
-              <label htmlFor="email">Email:</label>
-              <Field type="email" id="email" name="email" />
-              <ErrorMessage name="email" component="div" />
-            </div>
-
-            <div>
-              <label htmlFor="password">Password:</label>
-              <Field type="password" id="password" name="password" />
-              <ErrorMessage name="password" component="div" />
-            </div>
-
-            <div>
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      <h1>Email Verification</h1>;
     </div>
   );
 };

@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
-//
-import { useSelector, useDispatch } from "react-redux";
-import { setAdminStatus } from "../utils/userSlice";
 
+//
+import { useDispatch, useSelector } from "react-redux";
+// import { increment, decrement } from "../redux/admin";
+import { setAdminTrue, setAdminFalse } from "../redux/admin";
+
+//
 const SignIn = () => {
+  // const { count } = useSelector((state) => state.counter);
+  const { admin } = useSelector((state) => state.admin); // Change admin state to
+
+  const dispatch = useDispatch();
+  //
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (showAlert) {
-  //     const timeout = setTimeout(() => {
-  //       setShowAlert(false);
-  //       if (
-  //         alertMessage ===
-  //         "Congratulations! You have been successfully logged in"
-  //       ) {
-  //         history.push("/home-page");
-  //       }
-  //     }, 3000);
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [showAlert, alertMessage, history]);
 
   useEffect(() => {
     if (showAlert) {
@@ -60,48 +55,35 @@ const SignIn = () => {
       setAlertMessage(data.message);
       setShowAlert(true);
 
-      // if (data.message === 'Congratulations! You have been successfully logged in') {
-      //   // Store user data in local storage
-      //   localStorage.setItem('userData', JSON.stringify(data.User));
-      //   localStorage.setItem('token', data.token);
-      //   history.push('/home-page');
-      // }
-
       if (
         data.message === "Congratulations! You have been successfully logged in"
       ) {
         // Store user data in local storage
         localStorage.setItem("userData", JSON.stringify(data.User));
         localStorage.setItem("token", data.token);
-        localStorage.setItem("isAdmin", JSON.stringify(data.User.isAdmin));
-
-        // Navigate to the home page
-        // history.push("/home-page");
-        navigate("/home-page");
-        // Refresh the whole app
-        window.location.reload();
+        console.log(data.User.userRole);
+        console.log(data.User.userRole);
+        if (data.User.userRole === "admin") {
+          dispatch(setAdminTrue("admin"));
+          localStorage.setItem("reduxState", "admin");
+        }
       }
+
+      // Navigate to the home page
+      navigate("/home-page");
+      // Refresh the whole app
+      window.location.reload();
 
       // Reset the form
       setEmail("");
-      setPassword("");
+      setPassword("");  
     } catch (error) {
       console.error(error);
     }
   };
 
-  const isAdmin = useSelector((state) => state.user.isAdmin);
-
-  const dispatch = useDispatch();
-
-  const toggleAdminStatus = () => {
-    dispatch(setAdminStatus(!isAdmin));
-  };
-
   return (
     <Container>
-      <h2>Admin Status: {isAdmin ? "true" : "false"}</h2>
-      {/* <button onClick={toggleAdminStatus}>Toggle Admin Status</button> */}
       <Row className="justify-content-center mt-5">
         <Col md={6}>
           <h1 className="text-center mb-4">Sign In</h1>

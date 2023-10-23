@@ -1,13 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter,
-  Link,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { Link, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
@@ -35,6 +28,8 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("reduxState");
+    localStorage.removeItem("userData");
     setIsLoggedIn(false);
   };
 

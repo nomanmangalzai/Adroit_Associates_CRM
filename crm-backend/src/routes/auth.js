@@ -16,16 +16,20 @@ router.post(
 );
 
 //user account request api link
-router.post(
-  "/user-account-request",
-  authController.userAccountRequest
-);
+router.post("/user-account-request", authController.userAccountRequest);
 
 router.get(
   "/fetch-user-account-requests",
   verifyToken,
 
   authController.fetchUserAccountRequest
+);
+
+router.delete(
+  "/remove-user-account-request",
+  verifyToken,
+
+  authController.removeUserAccountrequest
 );
 
 module.exports = router;

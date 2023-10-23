@@ -1,6 +1,5 @@
 // controllers/authController.js
 const users = require("../models/auth");
-
 //database collection for account request
 const accountRequestCollection = require("../models/accountRequest");
 
@@ -207,6 +206,29 @@ const userAccountRequest = async (req, res, next) => {
     res.status(500).send(error);
   }
 };
+//
+const removeUserAccountrequest = async (req, res, next) => {
+  console.log("removeUserAccountrequest API called");
+  const { userId } = req.body;
+  console.log("userid=" + userId);
+  // await accountRequestCollection.deleteOne({
+  //   email: email,
+  // });
+  try {
+    //delete the user from userAccountRequest
+    const result = await accountRequestCollection.deleteOne({
+      _id: userId,
+    });
+    console.log("result=" + result);
+    return res
+      .status(204)
+      .json({ message: "User account rejected successfully." });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Could not reject user account request" });
+  }
+};
 
 //fetch user account requests
 const fetchUserAccountRequest = async (req, res, next) => {
@@ -225,4 +247,5 @@ module.exports = {
   signIn,
   userAccountRequest,
   fetchUserAccountRequest,
+  removeUserAccountrequest,
 };
