@@ -1,21 +1,30 @@
 const { sendEmail } = require("../utilities/emailUtils");
 const { sendEmailsToMultipleRecipients } = require("../utilities/emailUtils");
 const scheduledEmailSchema = require("../models/emailSchema");
+const requestedEmailCollection = require("../models/requestedEmail");
 const crmCalendar = require("../models/crmCalendar");
+const express = require("express");
+const app = express();
 
-const sendEmailController = async (req, res) => {
+app.use(express.json());
+
+const sendEmailController = async (req, res, next) => {
   console.log("The sendEmailController API hit");
-  const {
-    recipient,
-    subject,
-    message,
-    scheduledSendTime,
-    firstName,
-    lastName,
-    email,
-  } = req.body;
-  console.log("recipient=" + recipient);
-  const senderEmail = email;
+
+  const emailId = req.params.emailId;
+  const firstName = req.params.firstName;
+  const lastName = req.params.lastName;
+  console.log(emailId);
+  const emailData = await requestedEmailCollection.findOne({ _id: emailId });
+  const recipient = emailData.recipient;
+  const subject = emailData.subject;
+  const message = emailData.message;
+  const scheduledSendTime = emailData.scheduledSendTime;
+  const senderEmail = "noman.mangalzai4@gmail.com";
+  //
+  console.log("email id =" + emailId);
+  // console.log("recipient=" + emailData.recipient);
+  // const senderEmail = email;
   console.log("senderEmail = " + senderEmail);
   console.log("scheduledSendTime= " + scheduledSendTime + "");
 
@@ -32,8 +41,15 @@ const sendEmailController = async (req, res) => {
   );
   console.log("scheduledSendTime =", convertedScheduledTime);
 
-  if (!scheduledSendTime) {
+  if (scheduledSendTime === null) {
+    console.log("!scheduledSendTime condition run");
     // Handle case when scheduledSendTime is not provided
+    // below line sends the email
+    await sendEmailsToMultipleRecipients(recipient, subject, message);
+    console.log("Email sent immediately at:", new Date());
+    res.status(200).json({
+      message: "Your email has been sent immediately. Thank you.",
+    });
   }
 
   try {
@@ -128,7 +144,7 @@ const sendEmailController = async (req, res) => {
         }, secondReminderDelay);
 
         /////////////////////////////////////
-
+        //below email is sent to the actual recipient
         setTimeout(async () => {
           try {
             // Send scheduled email
@@ -177,6 +193,7 @@ const getEmailHistory = async (req, res) => {
   }
 };
 
+//
 const getEmailsController = async (req, res) => {
   try {
     console.log("getEmailsController API called");
@@ -202,10 +219,11 @@ const getEmailsController = async (req, res) => {
   }
 };
 
-///below is important API = Update Email
+///below is important API = Save Email
 
-const updateEmailController = async (req, res) => {
-  console.log("The updateEmailController API hit");
+const saveEmail = async (req, res) => {
+  console.log("The save email API hit");
+  //
   const {
     recipient,
     subject,
@@ -213,8 +231,12 @@ const updateEmailController = async (req, res) => {
     scheduledSendTime,
     firstName,
     lastName,
+    email,
   } = req.body;
-  console.log(firstName);
+  console.log("recipient=" + recipient);
+  const senderEmail = email;
+  console.log("senderEmail = " + senderEmail);
+  console.log("scheduledSendTimeww= " + scheduledSendTime + "");
 
   // Convert scheduledSendTime to Afghanistan time
   const scheduledTime = new Date(scheduledSendTime);
@@ -241,64 +263,33 @@ const updateEmailController = async (req, res) => {
       if (scheduledTime > currentTime) {
         const delay = scheduledTime.getTime() - currentTime.getTime();
 
-        // Delete the existing scheduled email from the database
-        await scheduledEmailSchema.deleteOne({ recipient });
-
-        // Save the updated scheduled email to the database
-        const newScheduledEmail = new scheduledEmailSchema({
+        // Save scheduled email to the database
+        const newScheduledEmail = new requestedEmailCollection({
           recipient,
+          senderEmail,
           subject,
           message,
           scheduledSendTime: scheduledTime,
         });
         await newScheduledEmail.save();
-
-        const reminderDelay = delay - 15 * 60 * 1000; // 15 minutes before the scheduled time
-
-        setTimeout(async () => {
-          try {
-            // Send reminder email
-            const senderName = `${firstName} ${lastName}`; // Replace with the actual sender's name
-            const reminderSubject = "Reminder: " + subject;
-            const reminderMessage = `Subject: Friendly Reminder: Email Scheduled in 15 Minutes\n\nDear ${senderName},\n\nI hope this email finds you well. I'm reaching out to remind you about an important email that you have scheduled to be sent to ${recipient} in just 15 minutes.\n\nAs the designated time approaches, I wanted to ensure that you are prepared and ready to deliver your message effectively. Here are a few key details to keep in mind:\n\nRecipient: ${recipient}\nScheduled Time: [insert scheduled time here]\nSubject: [insert email subject here]\n\nPlease take a moment to review the content of the email to ensure its accuracy and clarity. Double-check any attachments or links that need to be included, as well as the overall tone and message you wish to convey.\n\nIf you have any last-minute changes or updates to make, now is the perfect time to do so. Your attention to detail will greatly contribute to the success of your communication.\n\nShould you require any assistance or have any questions, please feel free to reach out to me. I'm here to support you in any way I can.\n\nThank you for your time and dedication to effective communication. Good luck with your email, and I trust it will have a positive impact on ${recipient}.\n\nBest regards,`;
-            await sendEmail(recipient, reminderSubject, reminderMessage);
-            console.log("Reminder email sent at:", new Date());
-          } catch (error) {
-            console.log("Error occurred while sending reminder email:", error);
-          }
-        }, reminderDelay);
-
-        setTimeout(async () => {
-          try {
-            // Send updated scheduled email
-            await sendEmail(recipient, subject, message);
-            console.log("Updated email sent at:", new Date());
-          } catch (error) {
-            console.log("Error occurred while sending updated email:", error);
-          }
-        }, delay);
-
-        res.status(200).json({
-          message: `Your email has been updated and scheduled to be sent at ${convertedScheduledTime}. Thank you.`,
-        });
-      } else {
-        // below line sends the email
-        await sendEmail(recipient, subject, message);
-        console.log("Email sent immediately at:", new Date());
-        res.status(200).json({
-          message: "Your email has been sent immediately. Thank you.",
-        });
+        if (newScheduledEmail) {
+          return res.status(200).json({
+            message:
+              "The email has successfully been recieved and sent to admin for verification",
+          });
+        } else {
+          return res.status(200).json({
+            message:
+              "The email has successfully been recieved and sent to admin for verification",
+          });
+        }
       }
-    } else {
-      await sendEmail(recipient, subject, message);
-      console.log("Email sent immediately at:", new Date());
-      res
-        .status(200)
-        .json({ message: "Your email has been sent immediately. Thank you." });
     }
   } catch (error) {
-    console.log("Error occurred while sending email:", error);
-    res.status(500).json({ error: "Failed to send email" });
+    console.log(error);
+    return res.status(500).json({
+      message: "Could not save your email settings",
+    });
   }
 };
 
@@ -316,11 +307,47 @@ const allEmails = async (req, res, next) => {
 };
 
 //
+const allRequestedEmails = async (req, res, next) => {
+  console.log("the allEmails API hit");
+  try {
+    const allRequestedEmails = await requestedEmailCollection.find(
+      {},
+      { __v: 0 }
+    );
+    console.log(allRequestedEmails);
+    res.status(200).json(allRequestedEmails);
+  } catch (error) {
+    console.log("Error occurred while fetching all emails:", error);
+    res.status(500).json({ error: "Failed to fetch emails" });
+  }
+};
+
+//Reject Email API
+const rejectEmail = async (req, res, next) => {
+  console.log("Verify Email API called");
+  const emailId = req.params.emailId;
+  try {
+    // const response = await requestedEmailCollection.deleteOne({ _id: emailId });
+    const response = await requestedEmailCollection.findOneAndDelete({
+      _id: emailId,
+    });
+    console.log(emailId);
+    if (response) {
+      return res
+        .status(200)
+        .json({ message: "The email has been successfully rejected" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Could not reject the email" });
+  }
+};
 
 module.exports = {
   sendEmailController,
   getEmailsController,
   getEmailHistory,
-  updateEmailController,
+  saveEmail,
   allEmails,
+  rejectEmail,
+  allRequestedEmails,
 };

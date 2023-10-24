@@ -9,7 +9,7 @@ import EmailList from "./components/scheduledEmails";
 import EmailHistory from "./components/EmailHistory";
 import SaveCrmCalendarData from "./components/SaveCrmCalendarData";
 import SignUpPermission from "./components/SignUpPermission";
-import Learn from "./components/Learn";
+import EmailVerificatoinList from "./components/EmailVerificatoinList";
 
 //importing privateRoutes file
 import PrivateRoutes from "./utils/PrivateRoutes";
@@ -75,8 +75,8 @@ function App() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/learn" className="nav-link">
-                  Learn
+                <Link to="/emails-to-be-verified" className="nav-link">
+                  Email List for Verification
                 </Link>
               </li>
             </>
@@ -123,8 +123,6 @@ function App() {
               path="/save-crm-calendar-data"
               element={<SaveCrmCalendarData />}
             />
-
-            <Route path="/learn" element={<Learn />} />
           </>
         )}
         <Route
@@ -135,6 +133,12 @@ function App() {
           <Route
             element={<SignUpPermission />}
             path="/accept-user-account-request"
+          />
+        </Route>
+        <Route element={<PrivateRoutes />}>
+          <Route
+            path="/emails-to-be-verified"
+            element={<EmailVerificatoinList />}
           />
         </Route>
       </Routes>
