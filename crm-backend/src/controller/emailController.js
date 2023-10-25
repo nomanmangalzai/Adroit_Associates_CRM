@@ -42,14 +42,21 @@ const sendEmailController = async (req, res, next) => {
   console.log("scheduledSendTime =", convertedScheduledTime);
 
   if (scheduledSendTime === null) {
-    console.log("!scheduledSendTime condition run");
-    // Handle case when scheduledSendTime is not provided
-    // below line sends the email
-    await sendEmailsToMultipleRecipients(recipient, subject, message);
-    console.log("Email sent immediately at:", new Date());
-    res.status(200).json({
-      message: "Your email has been sent immediately. Thank you.",
-    });
+    try {
+      console.log("!scheduledSendTime condition run");
+      // Handle case when scheduledSendTime is not provided
+      // below line sends the email
+      await sendEmailsToMultipleRecipients(recipient, subject, message);
+      console.log("Email sent immediately at:", new Date());
+      const response = await requestedEmailCollection.deleteOne({
+        _id: emailId,
+      });
+      res.status(200).json({
+        message: "Your email has been sent immediately. Thank you.",
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to send immediate email" });
+    }
   }
 
   try {
@@ -155,6 +162,18 @@ const sendEmailController = async (req, res, next) => {
           }
         }, delay);
 
+        //
+        const response = await requestedEmailCollection.deleteOne({
+          _id: emailId,
+        });
+        if (response) {
+          console.log("Deleted");
+        } else {
+          console.log("did not deleted");
+        }
+
+        //
+        console.log("check");
         res.status(200).json({
           message: `Your email has been scheduled to be sent at ${convertedScheduledTime}. Thank you.`,
         });
@@ -162,6 +181,15 @@ const sendEmailController = async (req, res, next) => {
         // below line sends the email
         await sendEmailsToMultipleRecipients(recipient, subject, message);
         console.log("Email sent immediately at:", new Date());
+        const response = await requestedEmailCollection.deleteOne({
+          _id: emailId,
+        });
+        if (response) {
+          console.log("Deleted");
+        } else {
+          console.log("did not deleted");
+        }
+
         res.status(200).json({
           message: "Your email has been sent immediately. Thank you.",
         });
@@ -233,7 +261,7 @@ const saveEmail = async (req, res) => {
     lastName,
     email,
   } = req.body;
-  console.log("recipient=" + recipient);
+  console.log("message=" + message);
   const senderEmail = email;
   console.log("senderEmail = " + senderEmail);
   console.log("scheduledSendTimeww= " + scheduledSendTime + "");
