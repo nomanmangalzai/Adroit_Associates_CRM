@@ -13,18 +13,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Below are files of routes folder.
 const autRoute = require("./src/routes/auth");
-const emailRoute = require("./src/routes/emailRoutes")
+const emailRoute = require("./src/routes/emailRoutes");
 const crmCalendarRoute = require("./src/routes/crmCalendar");
+const project = require("./src/routes/project");
+const newsletter = require("./src/routes/newsletter");
 
 //Below are middllewares.
 app.use("/authUser", autRoute);
-app.use('/email', emailRoute);
-app.use('/crm-calendar',crmCalendarRoute)
-
-
+app.use("/email", emailRoute);
+app.use("/crm-calendar", crmCalendarRoute);
+app.use("/project", project);
+app.use("/newsletter", newsletter);
 
 //below is database connection and server starting.
-const uri = "mongodb+srv://nomanmangalzai4:Katapoorkooz1@cluster0.nvltbzm.mongodb.net/?retryWrites=true&w=majority";
+const uri =
+  "mongodb+srv://nomanmangalzai4:Katapoorkooz1@cluster0.nvltbzm.mongodb.net/?retryWrites=true&w=majority";
 const PORT = 5000;
 
 mongoose

@@ -17,14 +17,14 @@ const sendEmailController = async (req, res, next) => {
   console.log(emailId);
   const emailData = await requestedEmailCollection.findOne({ _id: emailId });
   const recipient = emailData.recipient;
+  console.log("line 20 = " + recipient);
   const subject = emailData.subject;
   const message = emailData.message;
   const scheduledSendTime = emailData.scheduledSendTime;
   const senderEmail = "noman.mangalzai4@gmail.com";
   //
   console.log("email id =" + emailId);
-  // console.log("recipient=" + emailData.recipient);
-  // const senderEmail = email;
+
   console.log("senderEmail = " + senderEmail);
   console.log("scheduledSendTime= " + scheduledSendTime + "");
 
@@ -42,25 +42,28 @@ const sendEmailController = async (req, res, next) => {
   console.log("scheduledSendTime =", convertedScheduledTime);
 
   if (scheduledSendTime === null) {
-    try {
-      console.log("!scheduledSendTime condition run");
-      // Handle case when scheduledSendTime is not provided
-      // below line sends the email
-      await sendEmailsToMultipleRecipients(recipient, subject, message);
-      console.log("Email sent immediately at:", new Date());
-      const response = await requestedEmailCollection.deleteOne({
-        _id: emailId,
-      });
-      res.status(200).json({
-        message: "Your email has been sent immediately. Thank you.",
-      });
-    } catch (error) {
-      res.status(500).json({ message: "Failed to send immediate email" });
-    }
+    // try {
+    console.log("!scheduledSendTime condition run");
+    // Handle case when scheduledSendTime is not provided
+    // below line sends the email
+    await sendEmailsToMultipleRecipients(recipient, subject, message);
+    console.log("Email sent immediately at:", new Date());
+    const response = await requestedEmailCollection.deleteOne({
+      _id: emailId,
+    });
+    res.status(200).json({
+      message: "Your email has been sent immediately. Thank you.",
+    });
+    // } catch (error) {
+    //   res.status(500).json({ message: "Failed to send immediate email" });
+    // }
   }
-
+  console.log("check");
   try {
     if (scheduledSendTime) {
+      //
+      console.log("scheduledSendTime condition has been entered");
+      //
       const scheduledTime = new Date(convertedScheduledTime);
       const currentTime = new Date();
 

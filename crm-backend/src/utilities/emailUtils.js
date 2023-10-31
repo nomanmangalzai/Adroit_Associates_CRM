@@ -20,28 +20,7 @@ const sendEmail = async (recipient, subject, message) => {
   }
 };
 
-module.exports = { sendEmail };
 
-// const nodemailer = require("nodemailer");
-// const { email } = require("../controller/emailConfig");
-
-// const transporter = nodemailer.createTransport(email);
-// const sendEmail = async (recipients, subject, message) => {
-//   try {
-//     const mailOptions = {
-//       from: email.auth.user,
-//       to: Array.isArray(recipients) ? recipients.join(",") : recipients,
-//       subject,
-//       text: message,
-//     };
-
-//     const info = await transporter.sendMail(mailOptions);
-//     console.log("Email sent:", info.response);
-//   } catch (error) {
-//     console.log("Error occurred while sending email:", error);
-//   }
-// };
-// module.exports = { sendEmail };
 
 const sendEmailsToMultipleRecipients = async (recipients, subject, message) => {
   try {

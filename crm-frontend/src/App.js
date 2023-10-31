@@ -10,6 +10,9 @@ import EmailHistory from "./components/EmailHistory";
 import SaveCrmCalendarData from "./components/SaveCrmCalendarData";
 import SignUpPermission from "./components/SignUpPermission";
 import EmailVerificatoinList from "./components/EmailVerificatoinList";
+import Project from "./components/Project";
+import ShowProjects from "./components/ShowProjects";
+import Newsletter from "./components/NewsletterTemplate";
 
 //importing privateRoutes file
 import PrivateRoutes from "./utils/PrivateRoutes";
@@ -76,7 +79,22 @@ function App() {
               </li>
               <li className="nav-item">
                 <Link to="/emails-to-be-verified" className="nav-link">
-                  Email List for Verification
+                  Email Verification
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/projects" className="nav-link">
+                  Projects
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/view-projects" className="nav-link">
+                  View Projects
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/newsleter-template" className="nav-link">
+                  Newsletter
                 </Link>
               </li>
             </>
@@ -123,6 +141,9 @@ function App() {
               path="/save-crm-calendar-data"
               element={<SaveCrmCalendarData />}
             />
+            <Route path="/projects" element={<Project />} />
+            <Route path="/view-projects" element={<ShowProjects />} />
+            <Route path="/newsleter-template" element={<Newsletter />} />
           </>
         )}
         <Route
