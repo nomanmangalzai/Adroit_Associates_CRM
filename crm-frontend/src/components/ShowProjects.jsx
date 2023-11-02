@@ -53,7 +53,7 @@ const ProjectData = () => {
           </thead>
           <tbody>
             {projectData.map((project) => (
-              <tr key={project.id}>
+              <tr key={project._id}>
                 <td>{project.projectName}</td>
                 <td>{project.client}</td>
                 <td>{project.clientPOC}</td>

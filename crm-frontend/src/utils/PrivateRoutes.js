@@ -1,6 +1,8 @@
 import { Outlet, Navigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 // import { useSelector } from "react-redux";
+// const { admin } = useSelector((state) => state.admin);
+// console.log("admin=" + admin);
 
 const PrivateRoutes = () => {
   // const { admin } = useSelector((state) => state.admin);

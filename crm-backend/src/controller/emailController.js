@@ -373,6 +373,39 @@ const rejectEmail = async (req, res, next) => {
   }
 };
 
+//
+updateRequestedEmail = async (req, res, next) => {
+  console.log("updateRequestedEmail has been called");
+  const emailId = req.params.emailId;
+  console.log(emailId);
+  const { recipient, subject, message, scheduledSendtime } = req.body;
+  console.log("scheduledSendtime=" + scheduledSendtime);
+
+  const updateEmail = await requestedEmailCollection.findOneAndUpdate(
+    { _id: emailId }, // The ID of the email to update
+    {
+      recipient: recipient, // Updated recipient value
+      subject: subject, // Updated subject value
+      message: message, // Updated message value
+      scheduledSendTime: scheduledSendtime,
+    },
+    { new: true } // { new: true } returns the updated document
+  );
+
+  if (updateEmail) {
+    // Email update successful
+    res
+      .status(200)
+      .json({ message: "The email has been successfully updated" });
+  } else {
+    // Email update failed
+    // throw new Error("Failed to update email");
+    res.status(500).json({ message: "Failed to update he email" });
+  }
+};
+
+//
+
 module.exports = {
   sendEmailController,
   getEmailsController,
@@ -381,4 +414,5 @@ module.exports = {
   allEmails,
   rejectEmail,
   allRequestedEmails,
+  updateRequestedEmail,
 };

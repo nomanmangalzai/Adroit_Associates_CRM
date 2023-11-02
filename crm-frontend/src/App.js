@@ -13,7 +13,11 @@ import EmailVerificatoinList from "./components/EmailVerificatoinList";
 import Project from "./components/Project";
 import ShowProjects from "./components/ShowProjects";
 import Newsletter from "./components/NewsletterTemplate";
+import Modal from "react-modal";
 
+//
+import { useDispatch, useSelector } from "react-redux";
+import { setPopupTrue, setPopupFalse } from "./redux/popup"; // Adjust the relative path based on your project structure
 //importing privateRoutes file
 import PrivateRoutes from "./utils/PrivateRoutes";
 
@@ -21,6 +25,31 @@ import "./App.css";
 import { Button } from "react-bootstrap";
 
 function App() {
+  //
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const currentHour = now.getHours();
+
+      if (currentHour >= 7 && currentHour <= 16 && currentHour !== 12) {
+        handlePopup();
+      }
+    }, 58 * 60 * 1000); // Execute every 58 minutes
+
+    return () => {
+      clearInterval(interval); // Clear the interval when the component unmounts
+    };
+  }, []);
+
+  //
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   const navigate = useNavigate();
   const storedToken = localStorage.getItem("token");
   const [isLoggedIn, setIsLoggedIn] = useState(!!storedToken);
@@ -28,6 +57,18 @@ function App() {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, []);
+
+  //popup
+  const dispatch = useDispatch();
+  const isPopupOpen = useSelector((state) => state.popup);
+  const handleOpenPopup = () => {
+    dispatch(setPopupTrue());
+  };
+
+  const handleClosePopup = () => {
+    dispatch(setPopupFalse());
+  };
+  //
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -41,8 +82,43 @@ function App() {
     setIsLoggedIn(true);
   };
 
+  //project name to be used in popup
+  var projectName = "Chicken Distribution";
+  const handlePopup = async () => {
+    const token = localStorage.getItem("token");
+    //   const response = await fetch(
+
+    const response = await fetch(
+      "http://localhost:5000/project/view-projects?popup=popup",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // const data = await response.json();
+    if (response.ok) {
+      const data = await response.json();
+      for (let i = 0; i < data.length; i++) {
+        console.log(data.responses);
+      }
+
+      openModal();
+    }
+  };
   return (
     <>
+      <button onClick={handlePopup}>Open Modal</button>
+      <Modal isOpen={isOpen} onRequestClose={closeModal} contentLabel="Modal">
+        <h2>Modal Title</h2>
+        <p>
+          15 days are left so that an email will be sent to the client for
+          {projectName} project.
+        </p>
+        <button onClick={closeModal}>Close Modal</button>
+      </Modal>
       <nav className="navbar">
         <ul className="nav-links">
           {isLoggedIn && (

@@ -11,6 +11,7 @@ const { saveEmail } = require("../controller/emailController");
 const { allEmails } = require("../controller/emailController");
 const { rejectEmail } = require("../controller/emailController");
 const { allRequestedEmails } = require("../controller/emailController");
+const { updateRequestedEmail } = require("../controller/emailController");
 
 router.post(
   "/send-email/:emailId/:firstName/:lastName",
@@ -23,5 +24,10 @@ router.post("/save-email-for-verification", verifyToken, saveEmail);
 router.get("/all-emails", verifyToken, allEmails);
 router.get("/all-requested-emails", verifyToken, allRequestedEmails);
 router.delete("/reject-email/:emailId", rejectEmail);
+router.put(
+  "/update-requested-email/:emailId",
+  verifyToken,
+  updateRequestedEmail
+);
 
 module.exports = router;
