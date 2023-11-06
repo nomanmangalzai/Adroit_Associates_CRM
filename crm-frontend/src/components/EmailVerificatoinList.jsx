@@ -206,6 +206,77 @@ const EmailList = () => {
       });
   };
 
+  //
+  const responses = [];
+  const projectData = [];
+  // const popupTrigger = () => {
+  //   console.log("popupTrigger called");
+  //   const token = localStorage.getItem("token");
+  //   // Check if a token exists in local storage
+  //   const value = "popup";
+
+  //   // Make a GET request to the API endpoint
+  //   fetch(`http://localhost:5000/project/view-projects?value=${value}`, {
+  //     method: "GET",
+  //     headers: {
+  //       // Include the token in the request headers
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       } else {
+  //         // throw new Error("Failed to fetch data from the API");
+  //         return response.json();
+  //       }
+  //     })
+  //     .then((data) => {
+  //       // Handle the response data here
+  //       console.log("API Response:", data);
+  //       const days = [];
+  //       const ProjectData = [];
+  //       for (let i = 0; i < data.responses.length; i++) {
+  //         days[i] = data.responses[i];
+  //         responses[i] = days[i];
+  //         ProjectData[i] = data.projectData[i];
+  //         projectData[i] = ProjectData[i];
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("API Request Error:", error);
+  //     });
+  // };
+  // popupTrigger();
+
+  // Define an array of hours when you want the function to run
+  // const targetHours = [8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+  // // Calculate the time until the next target hour
+  // const now = new Date();
+  // const currentHour = now.getHours();
+  // const currentMinute = now.getMinutes();
+
+  // let nextHour = targetHours.find((hour) => hour > currentHour);
+
+  // if (nextHour === undefined) {
+  //   nextHour = targetHours[0];
+  // }
+
+  // const minutesUntilNextHour = (nextHour - currentHour) * 60 - currentMinute;
+
+  // setTimeout(() => {
+  //   popupTrigger();
+  //   // Set the next timeout to run at the next target hour
+  //   const nextTargetHourIndex = targetHours.indexOf(nextHour) + 1;
+  //   const nextTargetHour =
+  //     targetHours[nextTargetHourIndex % targetHours.length];
+  //   setTimeout(() => {
+  //     popupTrigger();
+  //   }, (nextTargetHour - nextHour) * 60 * 60 * 1000);
+  // }, minutesUntilNextHour * 60 * 1000);
+  // //
+
   return (
     <Container>
       <h2 className="text-center mb-4">Email List for Verification</h2>

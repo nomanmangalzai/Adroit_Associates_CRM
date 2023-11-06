@@ -9,6 +9,9 @@ const projectSchema = new mongoose.Schema({
   projectEndDate: { type: Date },
   assignedTo: { type: String },
   oneYear: { type: Boolean, default: false },
+  fifteenDays: { type: Boolean, default: false },
+  fiveDays: { type: Boolean, default: false },
+  oneDay: { type: Boolean, default: false },
 });
 
 const Project = mongoose.model("Project", projectSchema);

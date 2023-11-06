@@ -108,10 +108,29 @@ function App() {
       openModal();
     }
   };
+
+  //
+  const customStyles = {
+    content: {
+      width: "15%", // Set the width to 25% of the available space
+      height: "25%", // You can adjust the height as needed
+      top: "0", // Position it at the top
+      left: "0", // Position it at the left
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Add a semi-transparent overlay
+    },
+  };
+  //
   return (
     <>
       <button onClick={handlePopup}>Open Modal</button>
-      <Modal isOpen={isOpen} onRequestClose={closeModal} contentLabel="Modal">
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        contentLabel="Modal"
+        style={customStyles}
+      >
         <h2>Modal Title</h2>
         <p>
           15 days are left so that an email will be sent to the client for

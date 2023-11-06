@@ -1,16 +1,35 @@
+// const mongoose = require("mongoose");
+
+// const uri = "mongodb+srv://nomanmangalzai4:Katapoorkooz1@cluster0.nvltbzm.mongodb.net/?retryWrites=true&w=majority";
+
+// mongoose
+//   .connect(uri, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("Connection successful");
+//   })
+//   .catch((err) => console.log("No connection"));
+// src/db/connection.js
 const mongoose = require("mongoose");
 
-const uri = "mongodb+srv://nomanmangalzai4:Katapoorkooz1@cluster0.nvltbzm.mongodb.net/?retryWrites=true&w=majority";
+const uri =
+  "mongodb+srv://nomanmangalzai4:Katapoorkooz1@cluster0.nvltbzm.mongodb.net/?retryWrites=true&w=majority";
 
-mongoose
-  .connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connection successful");
-  })
-  .catch((err) => console.log("No connection"));
+async function connectToMongoDB() {
+  try {
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connection successful");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+  }
+}
+
+module.exports = { connectToMongoDB };  
 
 // const connectDB = async () => {
 //   try {

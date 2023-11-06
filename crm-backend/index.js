@@ -11,6 +11,9 @@ app.use(express.json());
 app.get(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//importing database file
+const { connectToMongoDB } = require("./src/db/connection");
+
 //Below are files of routes folder.
 const autRoute = require("./src/routes/auth");
 const emailRoute = require("./src/routes/emailRoutes");
@@ -30,16 +33,29 @@ const uri =
   "mongodb+srv://nomanmangalzai4:Katapoorkooz1@cluster0.nvltbzm.mongodb.net/?retryWrites=true&w=majority";
 const PORT = 5000;
 
-mongoose
-  .connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Database connected");
-    // Start the server after successful database connection
-    app.listen(PORT, console.log(`Server started on port ${PORT}`));
-  })
-  .catch((err) => console.log("Database connection error:", err));
+const { viewProjects } = require("./src/controller/project");
 
-// app.listen(PORT, console.log(`Server Started on port ${PORT}`));
+connectToMongoDB()
+  .then(() => {
+    // app.use("/", routes);
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${[PORT]}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to start the server:", err);
+  });
+
+// mongoose
+//   .connect(uri, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("Database connected");
+//     // Start the server after successful database connection
+//     app.listen(PORT, console.log(`Server started on port ${PORT}`));
+//   })
+//   .catch((err) => console.log("Database connection error:", err));
+
+// // app.listen(PORT, console.log(`Server Started on port ${PORT}`));
