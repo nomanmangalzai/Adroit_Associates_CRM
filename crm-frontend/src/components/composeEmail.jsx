@@ -220,21 +220,6 @@ Best regards,`;
                     className="text-danger"
                   />
                 </BootstrapForm.Group>
-                {/* <BootstrapForm.Group className="mb-3">
-                  <BootstrapForm.Label>Message:</BootstrapForm.Label>
-                  <Field
-                    as="textarea"
-                    id="message"
-                    name="message"
-                    className="form-control"
-                    rows={10} // Adjust the number of rows to increase the field area
-                  />
-                  <ErrorMessage
-                    name="message"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group> */}
                 <BootstrapForm.Group className="mb-3">
                   <BootstrapForm.Label>Message:</BootstrapForm.Label>
                   <div className="input-group">

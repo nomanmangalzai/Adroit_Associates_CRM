@@ -25,31 +25,7 @@ import "./App.css";
 import { Button } from "react-bootstrap";
 
 function App() {
-  //
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const currentHour = now.getHours();
 
-      if (currentHour >= 7 && currentHour <= 16 && currentHour !== 12) {
-        handlePopup();
-      }
-    }, 58 * 60 * 1000); // Execute every 58 minutes
-
-    return () => {
-      clearInterval(interval); // Clear the interval when the component unmounts
-    };
-  }, []);
-
-  //
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
   const navigate = useNavigate();
   const storedToken = localStorage.getItem("token");
   const [isLoggedIn, setIsLoggedIn] = useState(!!storedToken);
@@ -65,11 +41,6 @@ function App() {
     dispatch(setPopupTrue());
   };
 
-  const handleClosePopup = () => {
-    dispatch(setPopupFalse());
-  };
-  //
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("reduxState");
@@ -82,62 +53,8 @@ function App() {
     setIsLoggedIn(true);
   };
 
-  //project name to be used in popup
-  var projectName = "Chicken Distribution";
-  const handlePopup = async () => {
-    const token = localStorage.getItem("token");
-    //   const response = await fetch(
-
-    const response = await fetch(
-      "http://localhost:5000/project/view-projects?popup=popup",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    // const data = await response.json();
-    if (response.ok) {
-      const data = await response.json();
-      for (let i = 0; i < data.length; i++) {
-        console.log(data.responses);
-      }
-
-      openModal();
-    }
-  };
-
-  //
-  const customStyles = {
-    content: {
-      width: "15%", // Set the width to 25% of the available space
-      height: "25%", // You can adjust the height as needed
-      top: "0", // Position it at the top
-      left: "0", // Position it at the left
-    },
-    overlay: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)", // Add a semi-transparent overlay
-    },
-  };
-  //
   return (
     <>
-      <button onClick={handlePopup}>Open Modal</button>
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        contentLabel="Modal"
-        style={customStyles}
-      >
-        <h2>Modal Title</h2>
-        <p>
-          15 days are left so that an email will be sent to the client for
-          {projectName} project.
-        </p>
-        <button onClick={closeModal}>Close Modal</button>
-      </Modal>
       <nav className="navbar">
         <ul className="nav-links">
           {isLoggedIn && (
@@ -184,7 +101,7 @@ function App() {
               </li>
               <li className="nav-item">
                 <Link to="/view-projects" className="nav-link">
-                  View Projects
+                  View Project
                 </Link>
               </li>
               <li className="nav-item">

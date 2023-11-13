@@ -31,6 +31,24 @@ const ProjectForm = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const token = localStorage.getItem("token");
+
+    //fetching projectPoster information
+    const userDataString = localStorage.getItem("userData");
+
+    // Step 2: Parse the JSON string to a JavaScript object
+    const userData = JSON.parse(userDataString);
+
+    const firstName = userData.firstName;
+    const lastName = userData.lastName;
+    const userName = `${firstName} ${lastName}`;
+    const userEmail = userData.email;
+    // const userDataToSend = {
+    //   userName: userName,
+    //   userEmail: userEmail,
+    // };
+    values.userName = userName;
+    values.userEmail = userEmail;
+    //
     console.log(values);
     try {
       const response = await fetch(

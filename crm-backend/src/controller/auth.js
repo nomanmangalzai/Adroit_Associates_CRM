@@ -229,7 +229,6 @@ const removeUserAccountrequest = async (req, res, next) => {
       .json({ message: "Could not reject user account request" });
   }
 };
-
 //fetch user account requests
 const fetchUserAccountRequest = async (req, res, next) => {
   try {

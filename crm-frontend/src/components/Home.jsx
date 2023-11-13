@@ -329,7 +329,6 @@ const CrmCalendarData = () => {
                   dataItem.status
                 )}
               </td>
-              {/* <td>{dataItem.date}</td> */}
               <td>{new Date(dataItem.date).toLocaleDateString()}</td>
               <td>{dataItem.time}</td>
               <td>
@@ -388,5 +387,3 @@ const CrmCalendarData = () => {
   );
 };
 export default CrmCalendarData;
-
-/////////////////////////////////////////

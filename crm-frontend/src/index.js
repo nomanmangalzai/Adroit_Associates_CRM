@@ -44,11 +44,14 @@ const callBackendAPI = () => {
         if (perm === "granted") {
           for (let i = 0; i < responses.length; i++) {
             const days = responses[i];
+            console.log("days = " + days);
             const projectName = pName[i];
-            const client = organizationName;
+            const client = organizationName[i];
             console.log("days=" + days);
             new Notification("Alert Notification", {
               body: `${days} days are left for an email to be sent to ${client} for the ${projectName} project`,
+              sound: "default", // Use the default notification sound
+              icon: "https://www.google.com/url?sa=i&url=https%3A%2F%2Freact.dev%2F&psig=AOvVaw0tYaXRjRiWV38Yh5hvqNVp&ust=1699355644449000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPCqi5-fr4IDFQAAAAAdAAAAABAE", // Replace with the URL of a JavaScript-related icon
             });
           }
         }

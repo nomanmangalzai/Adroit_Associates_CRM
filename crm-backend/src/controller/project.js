@@ -8,13 +8,14 @@ const { sendEmailsToMultipleRecipients } = require("../utilities/emailUtils");
 const schedule = require("node-schedule");
 ////////////////////////////////////////////////////////////////////////////////
 const requestedEmailCollection = require("../models/requestedEmail");
+const ProjectPosterDetails = require("../models/projectPoster");
 const senderEmail = "noman.mangalzai4@gmail.com";
 
 const postProject = async (req, res, next) => {
   console.log("postProject API called.");
   const value = req;
-  if (value) {
-    console.log("The paramter passed is:=" + value);
+  if (value === "Automated Email") {
+    console.log("The paramter passed is:= " + value);
     console.log("IF condition called.");
 
     const allProjects = await Project.find({});
@@ -57,13 +58,6 @@ const postProject = async (req, res, next) => {
         //send the email
         var oneYear = allProjects[i].oneYear;
         if (oneYear === false) {
-          // await sendEmailsToMultipleRecipients(recipient, subject, message);
-          // const _id = allProjects[i]._id;
-          // const project = await Project.findOneAndUpdate(
-          //   { _id: _id },
-          //   { $set: { oneYear: true } },
-          //   { new: true }
-          // );
           // Save scheduled email to the database
           const newScheduledEmail = new requestedEmailCollection({
             recipient,
@@ -96,8 +90,11 @@ const postProject = async (req, res, next) => {
       projectStartingDate,
       projectEndDate,
       assignedTo,
+      userName,
+      userEmail,
     } = req.body;
 
+    console.log("userName = " + userName);
     // if (projectName) {
     console.log("if projectName condition entered");
     try {
@@ -117,6 +114,17 @@ const postProject = async (req, res, next) => {
 
       //
       const saveProject = await newProject.save();
+
+      //save project poster's details
+      const projectPosterInfo = new ProjectPosterDetails({
+        userName: userName,
+        userEmail: userEmail,
+        projectName: projectName,
+      });
+      //save it
+      await projectPosterInfo.save();
+
+      //
       if (saveProject) {
         return res
           .status(201)
@@ -134,7 +142,7 @@ const postProject = async (req, res, next) => {
   }
 };
 
-//call postProject everymorning
+//call postProject every morning
 const job = schedule.scheduleJob("0 8-11,13-16 * * *", () => {
   postProject("Automated Email");
 });
@@ -142,103 +150,6 @@ const job = schedule.scheduleJob("0 8-11,13-16 * * *", () => {
 //fetch projects
 const viewProjects = async (req, res, next) => {
   console.log("fetchProjects API has been called.");
-  // const value = req.query.value;
-  // console.log("value" + value);
-  // // const value = "popup";
-  // if (value === "popup") {
-  //   console.log("value === popup called");
-  //   //for data you use allProjects
-  //   const allProjects = await Project.find({});
-  //   ///////////////////////////////////////////////////
-  //   const allProjectsDates = allProjects.map(
-  //     (project) => project.projectStartingDate
-  //   );
-
-  //   //below variable we send to the frontend
-  //   const responses = [];
-  //   projectData = [];
-  //   ////////////////////////////////////////
-  //   for (let i = 0; i < allProjects.length; i++) {
-  //     //how many days a year is
-  //     const date = new Date(allProjectsDates[i]);
-
-  //     const currentDate = new Date(); // Current date
-
-  //     // Calculate the time difference in milliseconds
-  //     const timeDifference = currentDate.getTime() - date.getTime();
-
-  //     // Convert the time difference to days
-  //     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  //     console.log("down");
-  //     console.log(daysDifference); // Number of days between the given date and the current date
-
-  //     const isLeapYear =
-  //       (date.getFullYear() % 4 === 0 && date.getFullYear() % 100 !== 0) ||
-  //       date.getFullYear() % 400 === 0;
-  //     const oneYearDuration = isLeapYear ? 366 : 365;
-  //     console.log("date = " + date);
-  //     //
-  //     //////determine if one year or more
-  //     if (
-  //       daysDifference === oneYearDuration ||
-  //       daysDifference > oneYearDuration
-  //     ) {
-  //       //
-  //       console.log("oneYearDuration=" + oneYearDuration);
-  //       if (oneYearDuration === 366) {
-  //         //leap year
-
-  //         if (daysDifference - 351 === 15) {
-  //           console.log("i = " + i + " " + "366: 15 days condition called");
-  //           responses.push("15 days");
-  //           projectData.push(allProjects[i].projectName);
-  //         } else if (daysDifference - 361 === 5) {
-  //           console.log("i = " + i + " " + "366: 5 days condition called");
-  //           responses.push("5 days");
-  //           projectData.push(allProjects[i].projectName);
-  //         } else if (daysDifference - 1 === 365) {
-  //           console.log("i = " + i + " " + "366: 1 day condition called");
-  //           responses.push("1 day");
-  //           projectData.push(allProjects[i].projectName);
-  //         }
-  //       } else if (oneYearDuration === 365) {
-  //         if (daysDifference - 15 === 350) {
-  //           console.log("oneYearDuration = " + (oneYearDuration - 15));
-  //           console.log("i = " + i + " " + "365: 15 days condition called");
-  //           responses.push("15 days");
-  //           projectData.push(allProjects[i].projectName);
-  //         } else if (daysDifference - 5 === 360) {
-  //           console.log("i = " + i + " " + "365: 5 days condition called");
-  //           responses.push("5 days");
-  //           projectData.push(allProjects[i].projectName);
-  //         } else if (daysDifference - 1 === 364) {
-  //           console.log("i = " + i + " " + "365: 1 day condition called");
-  //           responses.push("1 day");
-  //           projectData.push(allProjects[i].projectName);
-  //         }
-  //       } else {
-  //         console.log("No one year left to email");
-  //       }
-
-  //       //
-  //       // const project = allProjects[i];
-  //       // Perform operations on each project record
-  //     }
-  //   } //loop ends here.
-  //   res.locals.responses = responses;
-  //   res.locals.projectData = projectData;
-  //   console.log("responses = " + res.locals.responses);
-  //   next();
-
-  //   //in the loop above the responses have been gathered
-  //   //NOW SEND RESPONSE TO FRONTEND
-  //   // return res
-  //   //   .status(200)
-  //   //   .json({ responses: responses, projectData: projectData });
-
-  //   ////////////////////////////////////////////////////
-  // }
-  //  else {
   try {
     const allProjects = await Project.find({});
     res.status(200).json(allProjects);
@@ -248,20 +159,10 @@ const viewProjects = async (req, res, next) => {
   // }
 };
 
-//call viewProjects for popup
-// const popupJob = schedule.scheduleJob("0 8-11,13-16 * * *", () => {
-//   viewProjects("popup");
-// });
-
-// viewProjects("popup");
-
 ///popup trigger
 const popupTrigger = async (req, res, next) => {
   console.log("popupTrigger function called");
 
-  //
-  // if (value === "popup") {
-  // console.log("value === popup called");
   //for data you use allProjects
   const allProjects = await Project.find({});
   ///////////////////////////////////////////////////
@@ -275,8 +176,9 @@ const popupTrigger = async (req, res, next) => {
   var client = [];
   ////////////////////////////////////////
   for (let i = 0; i < allProjects.length; i++) {
-    //how many days a year is
+    // how many days a year is
     const date = new Date(allProjectsDates[i]);
+    console.log("date = " + date);
 
     const currentDate = new Date(); // Current date
 
@@ -285,146 +187,132 @@ const popupTrigger = async (req, res, next) => {
 
     // Convert the time difference to days
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    console.log("down");
-    console.log(daysDifference); // Number of days between the given date and the current date
+
+    console.log(
+      "daysDifference for project " +
+        allProjects[i].projectName +
+        " is " +
+        daysDifference
+    ); // Number of days between the given date and the current date
+    console.log("pName = " + allProjects[i].projectName);
 
     const isLeapYear =
       (date.getFullYear() % 4 === 0 && date.getFullYear() % 100 !== 0) ||
       date.getFullYear() % 400 === 0;
     const oneYearDuration = isLeapYear ? 366 : 365;
-    console.log("date = " + date);
+    // console.log("date = " + date);
     //
     //////determine if one year or more
-    if (
-      daysDifference === oneYearDuration ||
-      daysDifference > oneYearDuration
-    ) {
-      //
-      console.log("oneYearDuration=" + oneYearDuration);
-      if (oneYearDuration === 366) {
-        //leap year
+    // if (
+    //   daysDifference === oneYearDuration ||
+    //   daysDifference > oneYearDuration
+    // ) {
+    //
+    console.log("oneYearDuration=" + oneYearDuration);
+    if (oneYearDuration === 366) {
+      //leap year
 
-        if (daysDifference - 351 === 15) {
-          if (allProjects[i].fifteenDays === false) {
-            console.log("i = " + i + " " + "366: 15 days condition called");
-            responses.push("15 days");
-            projectName.push(allProjects[i].projectName);
-            client.push(allProjects[i].client);
-            //
-            const projectId = allProjects[i]._id;
-            console.log(projectId);
-            const updatedProject = await Project.findOneAndUpdate(
-              { _id: projectId }, // Your filter criteria go here
-              { $set: { fifteenDays: true } }, // Update operation
-              { new: true, upsert: false } // Options to return the updated document
-            );
-            //
-          }
-        } else if (daysDifference - 361 === 5) {
-          console.log("i = " + i + " " + "366: 5 days condition called");
-          if (allProjects[i].fiveDays === false) {
-            responses.push("5 days");
-            projectName.push(allProjects[i].projectName);
-            client.push(allProjects[i].client);
-            //
-            const projectId = allProjects[i]._id;
-            console.log(projectId);
-            const updatedProject = await Project.findOneAndUpdate(
-              { _id: projectId }, // Your filter criteria go here
-              { $set: { fiveDays: true } }, // Update operation
-              { new: true, upsert: false } // Options to return the updated document
-            );
-            //
-          }
-        } else if (daysDifference - 1 === 365) {
-          if (allProjects[i].oneDay === false) {
-            console.log("i = " + i + " " + "366: 1 day condition called");
-            responses.push("1 day");
-            projectName.push(allProjects[i].projectName);
-            client.push(allProjects[i].client);
-            //
-            const projectId = allProjects[i]._id;
-            console.log(projectId);
-            const updatedProject = await Project.findOneAndUpdate(
-              { _id: projectId }, // Your filter criteria go here
-              { $set: { oneDay: true } }, // Update operation
-              { new: true, upsert: false } // Options to return the updated document
-            );
-            //
-          }
-        }
-      } else if (oneYearDuration === 365) {
-        if (daysDifference - 15 === 350) {
-          if (allProjects[i].fifteenDays === false) {
-            console.log("oneYearDuration = " + (oneYearDuration - 15));
-            console.log("i = " + i + " " + "365: 15 days condition called");
-            responses.push("15 days");
-            projectName.push(allProjects[i].projectName);
-            client.push(allProjects[i].client);
-            //
-            const projectId = allProjects[i]._id;
-            console.log(projectId);
-            const updatedProject = await Project.findOneAndUpdate(
-              { _id: projectId }, // Your filter criteria go here
-              { $set: { fifteenDays: true } }, // Update operation
-              { new: true, upsert: false } // Options to return the updated document
-            );
-            //
-          }
-        } else if (daysDifference - 5 === 360) {
-          if (allProjects[i].fiveDays === false) {
-            console.log("i = " + i + " " + "365: 5 days condition called");
-            responses.push("5 days");
-            projectName.push(allProjects[i].projectName);
-            client.push(allProjects[i].client);
-            //
-            const projectId = allProjects[i]._id;
-            console.log(projectId);
-            const updatedProject = await Project.findOneAndUpdate(
-              { _id: projectId }, // Your filter criteria go here
-              { $set: { fiveDays: true } }, // Update operation
-              { new: true, upsert: false } // Options to return the updated document
-            );
-            //
-          }
-        } else if (daysDifference - 1 === 364) {
-          if (allProjects[i].oneDay === false) {
-            console.log("i = " + i + " " + "365: 1 day condition called");
-            responses.push("1 day");
-            projectName.push(allProjects[i].projectName);
-            client.push(allProjects[i].client);
-            //
-            const projectId = allProjects[i]._id;
-            console.log(projectId);
-            const updatedProject = await Project.findOneAndUpdate(
-              { _id: projectId }, // Your filter criteria go here
-              { $set: { oneDay: true } }, // Update operation
-              { new: true, upsert: false } // Options to return the updated document
-            );
-            //
-          }
-        }
-      } else {
-        console.log("No one year left to email");
+      if (daysDifference === 350 && !allProjects[i].fifteenDays) {
+        console.log("i = " + i + " " + "366: 15 days condition called");
+        responses.push("15 days");
+        projectName.push(allProjects[i].projectName);
+        client.push(allProjects[i].client);
+        //
+        const projectId = allProjects[i]._id;
+        console.log(projectId);
+        const updatedProject = await Project.findOneAndUpdate(
+          { _id: projectId }, // Your filter criteria go here
+          { $set: { fifteenDays: true } }, // Update operation
+          { new: true, upsert: false } // Options to return the updated document
+        );
+        //
+      } else if (daysDifference === 5 && !allProjects[i].fiveDays) {
+        console.log("i = " + i + " " + "366: 5 days condition called");
+        responses.push("5 days");
+        projectName.push(allProjects[i].projectName);
+        client.push(allProjects[i].client);
+        //
+        const projectId = allProjects[i]._id;
+        console.log(projectId);
+        const updatedProject = await Project.findOneAndUpdate(
+          { _id: projectId }, // Your filter criteria go here
+          { $set: { fiveDays: true } }, // Update operation
+          { new: true, upsert: false } // Options to return the updated document
+        );
+        //
+      } else if (
+        oneYearDuration - daysDifference === 1 &&
+        !allProjects[i].fifteenDays
+      ) {
+        console.log("i = " + i + " " + "366: 1 day condition called");
+        responses.push("1 day");
+        projectName.push(allProjects[i].projectName);
+        client.push(allProjects[i].client);
+        //
+        const projectId = allProjects[i]._id;
+        console.log(projectId);
+        const updatedProject = await Project.findOneAndUpdate(
+          { _id: projectId }, // Your filter criteria go here
+          { $set: { oneDay: true } }, // Update operation
+          { new: true, upsert: false } // Options to return the updated document
+        );
+        //
       }
-
-      //
-      // const project = allProjects[i];
-      // Perform operations on each project record
+    } else if (oneYearDuration === 365) {
+      if (daysDifference === 350 && !allProjects[i].fifteenDays) {
+        console.log("minus = ");
+        console.log(daysDifference - 15);
+        console.log("i = " + i + " " + "365: 15 days condition called");
+        responses.push("15 days");
+        projectName.push(allProjects[i].projectName);
+        client.push(allProjects[i].client);
+        //
+        const projectId = allProjects[i]._id;
+        console.log(projectId);
+        const updatedProject = await Project.findOneAndUpdate(
+          { _id: projectId }, // Your filter criteria go here
+          { $set: { fifteenDays: true } }, // Update operation
+          { new: true, upsert: false } // Options to return the updated document
+        );
+        //
+      } else if (daysDifference === 360 && !allProjects[i].fiveDays) {
+        console.log("minus = ");
+        console.log(daysDifference - 15);
+        console.log("i = " + i + " " + "365: 5 days condition called");
+        responses.push("5 days");
+        projectName.push(allProjects[i].projectName);
+        client.push(allProjects[i].client);
+        //
+        const projectId = allProjects[i]._id;
+        console.log(projectId);
+        const updatedProject = await Project.findOneAndUpdate(
+          { _id: projectId }, // Your filter criteria go here
+          { $set: { fiveDays: true } }, // Update operation
+          { new: true, upsert: false } // Options to return the updated document
+        );
+        //
+      } else if (daysDifference === 364 && !allProjects[i].oneDay) {
+        console.log("i = " + i + " " + "365: 1 day condition called");
+        responses.push("1 day");
+        projectName.push(allProjects[i].projectName);
+        client.push(allProjects[i].client);
+        //
+        const projectId = allProjects[i]._id;
+        console.log(projectId);
+        const updatedProject = await Project.findOneAndUpdate(
+          { _id: projectId }, // Your filter criteria go here
+          { $set: { oneDay: true } }, // Update operation
+          { new: true, upsert: false } // Options to return the updated document
+        );
+        //
+      }
+    } else {
+      console.log("No one year left to email");
     }
-    // } //loop ends here.
-    res.locals.responses = responses;
-    res.locals.projectName = projectName;
-    console.log("responses = " + res.locals.responses);
+    // }//condition ends here
   }
 
-  //
-  // const
-  responses = res.locals.responses;
-  // const
-  projectName = res.locals.projectName;
-  console.log("responses = " + responses);
-
+  console.log("responses me =" + responses);
   //send response
   return res.status(200).json({
     responses: responses,

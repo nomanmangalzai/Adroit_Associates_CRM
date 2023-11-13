@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////
+
 import React, { useState } from "react";
 import {
   Container,
@@ -9,45 +9,12 @@ import {
 } from "react-bootstrap";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 
-//
-import Modal from "react-modal";
-
-import { useDispatch, useSelector } from "react-redux";
-import { setPopupTrue, setPopupFalse } from "../redux/popup"; // Adjust the relative path based on your project structure
-
-/////////////////////////////////////////////////////
 const NewsletterForm = () => {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  //
-  //
-  const dispatch = useDispatch();
-  const isPopupOpen = useSelector((state) => state.popup);
-  localStorage.setItem("popup", isPopupOpen.popup);
-
-  //
   //redux actions
-  const handleOpenPopup = () => {
-    dispatch(setPopupTrue());
-    setIsModalOpen(true);
-  };
-
-  const handleClosePopup = () => {
-    dispatch(setPopupFalse());
-    setIsModalOpen(false);
-  };
-
-  //
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   const handleSubjectChange = (event) => {
     setSubject(event.target.value);
@@ -94,29 +61,6 @@ const NewsletterForm = () => {
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
           <h2 className="text-center mb-4">Send Email</h2>
-          <Modal
-            isOpen={isModalOpen}
-            onRequestClose={closeModal}
-            style={{
-              content: {
-                width: "calc(100% / 10)", // Set the width to one twelfth of the container
-                height: "25%", // Adjust the height as needed
-                fontFamily: "Arial, sans-serif", // Set the font family
-              },
-              overlay: {
-                backgroundColor: "rgba(0, 0, 0, 0.5)", // Customize the overlay color
-              },
-            }}
-          >
-            <Button onClick={closeModal}>x</Button>
-            <div
-              style={{ fontWeight: "bold", fontSize: "16px", margin: "10px 0" }}
-            >
-              15 days are left until an automated email is sent to the client.
-            </div>
-          </Modal>
-          <button onClick={handleOpenPopup}>Open Pop-up</button>
-
           <Formik
             initialValues={{
               title: "Monthly Newsletter",

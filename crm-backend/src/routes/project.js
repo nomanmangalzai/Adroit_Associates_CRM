@@ -8,6 +8,5 @@ const { popupTrigger } = require("../controller/project");
 router.post("/save-project-data", verifyToken, postProject);
 router.get("/view-projects", verifyToken, viewProjects);
 router.get("/popup", verifyToken, popupTrigger);
-
 //
 module.exports = router;

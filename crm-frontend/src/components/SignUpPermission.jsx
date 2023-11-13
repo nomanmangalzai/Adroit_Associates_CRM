@@ -63,28 +63,6 @@ const SuperAdminScreen = () => {
     }
   };
 
-  // const rejectUserRequest = async (userId) => {
-  //   const token = localStorage.getItem("token");
-
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:5000/authUser/remove-user-account-request`
-  //     );
-
-  //     if (response.ok) {
-  //       setResponseMessage(
-  //         `User request with ID ${userId} rejected successfully.`
-  //       );
-  //       // After rejecting the request, update the user requests list
-  //       setUserRequests(userRequests.filter((user) => user._id !== userId));
-  //     } else {
-  //       setResponseMessage("Failed to reject user request.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error rejecting user request:", error);
-  //   }
-  // };
-
   const rejectUserRequest = async (userId) => {
     const token = localStorage.getItem("token");
 
@@ -115,7 +93,6 @@ const SuperAdminScreen = () => {
     }
   };
 
-  // if (admin === "admin") {
   return (
     <div>
       <h1>User Account Requests</h1>
