@@ -145,135 +145,171 @@ Best regards,`;
   };
 
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-center">
-        <Col xs={12} md={6}>
-          <h2 className="text-center mb-4">Send Email</h2>
-          <Fade in={showAlert}>
-            <div className="mb-3">
-              {showAlert && (
-                <Alert
-                  variant={alertVariant}
-                  onClose={() => setShowAlert(false)}
-                  dismissible
-                >
-                  {alertMessage}
-                </Alert>
-              )}
-            </div>
-          </Fade>
-          <Formik
-            initialValues={{
-              recipient: emailAddress || "",
-              subject: "",
-              message: "",
-              scheduledSendTime: dateTime || null,
-            }}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting, setFieldValue }) => (
-              <Form>
-                <BootstrapForm.Group className="mb-3">
-                  <BootstrapForm.Label>Recipient:</BootstrapForm.Label>
-                  <div className="input-group">
-                    <span
-                      className="input-group-text"
-                      onClick={() => handleSelectAllEmails(setFieldValue)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <FontAwesomeIcon icon={faCheckSquare} />
-                    </span>
-                    <Field
-                      type="text"
-                      id="recipient"
-                      name="recipient"
-                      className="form-control"
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="recipient"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-                <BootstrapForm.Group className="mb-3">
-                  <BootstrapForm.Label>Subject:</BootstrapForm.Label>
-                  <div className="input-group">
-                    <span
-                      className="input-group-text"
-                      onClick={() => handleIconClick(setFieldValue)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <FontAwesomeIcon icon={faCheckCircle} />
-                    </span>
-                    <Field
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      className="form-control"
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="subject"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-                <BootstrapForm.Group className="mb-3">
-                  <BootstrapForm.Label>Message:</BootstrapForm.Label>
-                  <div className="input-group">
-                    <span
-                      className="input-group-text"
-                      onClick={() => handleMessageIconClick(setFieldValue)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <FontAwesomeIcon icon={faCheckCircle} />
-                    </span>
-                    <Field
-                      as="textarea"
-                      id="message"
-                      name="message"
-                      className="form-control"
-                      rows={10}
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="message"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-                <BootstrapForm.Group className="mb-3">
-                  <BootstrapForm.Label>Schedule Send Time:</BootstrapForm.Label>
-                  <Field
-                    type="datetime-local"
-                    id="scheduledSendTime"
-                    name="scheduledSendTime"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="scheduledSendTime"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-                <div className="d-grid">
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={isSubmitting}
+    <div className="container" style={containerDivStyle}>
+      <Container className="mt-5">
+        <Row className="justify-content-center">
+          <Col xs={12} md={6}>
+            <h1 className="text-center mb-4 mt-2">Send Email</h1>
+            <Fade in={showAlert}>
+              <div className="mb-3">
+                {showAlert && (
+                  <Alert
+                    variant={alertVariant}
+                    onClose={() => setShowAlert(false)}
+                    dismissible
                   >
-                    {isSubmitting ? "Sending..." : "Send Email"}
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </Col>
-      </Row>
-    </Container>
+                    {alertMessage}
+                  </Alert>
+                )}
+              </div>
+            </Fade>
+            <Formik
+              initialValues={{
+                recipient: emailAddress || "",
+                subject: "",
+                message: "",
+                scheduledSendTime: dateTime || null,
+              }}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting, setFieldValue }) => (
+                <Form>
+                  <BootstrapForm.Group className="mb-3">
+                    <BootstrapForm.Label className="mb-1" style={headerStyle}>
+                      Recipient:
+                    </BootstrapForm.Label>
+                    <div className="input-group">
+                      <span
+                        className="input-group-text"
+                        onClick={() => handleSelectAllEmails(setFieldValue)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <FontAwesomeIcon icon={faCheckSquare} />
+                      </span>
+                      <Field
+                        type="text"
+                        id="recipient"
+                        name="recipient"
+                        className="form-control"
+                        style={fieldStyle}
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="recipient"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+                  <BootstrapForm.Group className="mb-3">
+                    <BootstrapForm.Label className="mb-1" style={headerStyle}>
+                      Subject:
+                    </BootstrapForm.Label>
+                    <div className="input-group">
+                      <span
+                        className="input-group-text"
+                        onClick={() => handleIconClick(setFieldValue)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <FontAwesomeIcon icon={faCheckCircle} />
+                      </span>
+                      <Field
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        className="form-control"
+                        style={fieldStyle}
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="subject"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+                  <BootstrapForm.Group className="mb-3">
+                    <BootstrapForm.Label>Message:</BootstrapForm.Label>
+                    <div className="input-group">
+                      <span
+                        className="input-group-text"
+                        onClick={() => handleMessageIconClick(setFieldValue)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <FontAwesomeIcon icon={faCheckCircle} />
+                      </span>
+                      <Field
+                        as="textarea"
+                        id="message"
+                        name="message"
+                        className="form-control"
+                        style={fieldStyle}
+                        rows={10}
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="message"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+                  <BootstrapForm.Group className="mb-3">
+                    <BootstrapForm.Label>
+                      Schedule Send Time:
+                    </BootstrapForm.Label>
+                    <Field
+                      type="datetime-local"
+                      id="scheduledSendTime"
+                      name="scheduledSendTime"
+                      className="form-control"
+                      style={fieldStyle}
+                    />
+                    <ErrorMessage
+                      name="scheduledSendTime"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+                  <div className="d-grid">
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                      style={buttonColors}
+                    >
+                      {isSubmitting ? "Sending..." : "Send Email"}
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
 export default EmailForm;
+
+//
+const containerDivStyle = {
+  backgroundColor: "#f0f0f0",
+  width: "1053px",
+  height: "700px",
+  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
+  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+};
+const buttonColors = {
+  background: "linear-gradient(to right, #2493B3, #60BA5E)",
+  height: " 58px",
+  borderRadius: "0 0 0 10px",
+};
+
+const fieldStyle = {
+  height: "51px",
+  borderRadius: "0 0 0 10px",
+};
+
+const headerStyle = {
+  color: "#005055",
+};

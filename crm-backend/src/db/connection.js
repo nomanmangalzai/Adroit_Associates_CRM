@@ -28,7 +28,7 @@ async function connectToMongoDB() {
     console.error("MongoDB connection error:", err);
   }
 }
-
+  
 module.exports = { connectToMongoDB };  
 
 // const connectDB = async () => {

@@ -78,10 +78,10 @@ const Signup = () => {
   };
 
   return (
-    <Container>
+    <Container className="container mt-5" style={containerDivStyle}>
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
-          <h1 className="text-center">Signup</h1>
+          <h1 className="text-center mt-3">Signup</h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -89,8 +89,15 @@ const Signup = () => {
           >
             <Form as={BootstrapForm}>
               <BootstrapForm.Group controlId="firstName">
-                <BootstrapForm.Label>First Name</BootstrapForm.Label>
-                <Field type="text" name="firstName" className="form-control" />
+                <BootstrapForm.Label style={headerStyle}>
+                  First Name
+                </BootstrapForm.Label>
+                <Field
+                  type="text"
+                  name="firstName"
+                  className="form-control"
+                  style={fieldStyle}
+                />
                 <ErrorMessage
                   name="firstName"
                   component={BootstrapForm.Text}
@@ -99,8 +106,15 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="lastName">
-                <BootstrapForm.Label>Last Name</BootstrapForm.Label>
-                <Field type="text" name="lastName" className="form-control" />
+                <BootstrapForm.Label style={headerStyle}>
+                  Last Name
+                </BootstrapForm.Label>
+                <Field
+                  type="text"
+                  name="lastName"
+                  className="form-control"
+                  style={fieldStyle}
+                />
                 <ErrorMessage
                   name="lastName"
                   component={BootstrapForm.Text}
@@ -109,8 +123,15 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="email">
-                <BootstrapForm.Label>Email</BootstrapForm.Label>
-                <Field type="email" name="email" className="form-control" />
+                <BootstrapForm.Label style={headerStyle}>
+                  Email
+                </BootstrapForm.Label>
+                <Field
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  style={fieldStyle}
+                />
                 <ErrorMessage
                   name="email"
                   component={BootstrapForm.Text}
@@ -119,11 +140,14 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="password">
-                <BootstrapForm.Label>Password</BootstrapForm.Label>
+                <BootstrapForm.Label style={headerStyle}>
+                  Password
+                </BootstrapForm.Label>
                 <Field
                   type="password"
                   name="password"
                   className="form-control"
+                  style={fieldStyle}
                 />
                 <ErrorMessage
                   name="password"
@@ -133,11 +157,14 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="confirmPassword">
-                <BootstrapForm.Label>Confirm Password</BootstrapForm.Label>
+                <BootstrapForm.Label style={headerStyle}>
+                  Confirm Password
+                </BootstrapForm.Label>
                 <Field
                   type="password"
                   name="confirmPassword"
                   className="form-control"
+                  style={fieldStyle}
                 />
                 <ErrorMessage
                   name="confirmPassword"
@@ -146,7 +173,12 @@ const Signup = () => {
                 />
               </BootstrapForm.Group>
 
-              <Button type="submit" variant="primary" className="w-100 mt-3">
+              <Button
+                type="submit"
+                variant="primary"
+                className="w-100 mt-3"
+                style={buttonColors}
+              >
                 Signup
               </Button>
             </Form>
@@ -164,3 +196,29 @@ const Signup = () => {
 };
 
 export default Signup;
+
+//
+const containerDivStyle = {
+  backgroundColor: "#f0f0f0",
+  width: "1250px",
+  height: "650px",
+  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
+  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const buttonColors = {
+  background: "linear-gradient(to right, #2493B3, #60BA5E)",
+  height: " 58px",
+  borderRadius: "0 0 0 10px",
+};
+
+const fieldStyle = {
+  height: "51px",
+  borderRadius: "0 0 0 10px",
+};
+
+const headerStyle = {
+  color: "#005055",
+};

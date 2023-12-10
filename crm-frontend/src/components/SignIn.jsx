@@ -61,7 +61,11 @@ const SignIn = () => {
         // Store user data in local storage
         localStorage.setItem("userData", JSON.stringify(data.User));
         localStorage.setItem("token", data.token);
-        console.log(data.User.userRole);
+        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 1 day in milliseconds
+        localStorage.setItem("tokenExpiration", expirationTime);
+        // const expirationTime = new Date().getTime() + 10 * 1000; // 10 seconds in milliseconds
+        // localStorage.setItem("tokenExpiration", expirationTime);
+
         console.log(data.User.userRole);
         if (data.User.userRole === "admin") {
           dispatch(setAdminTrue("admin"));
@@ -76,58 +80,94 @@ const SignIn = () => {
 
       // Reset the form
       setEmail("");
-      setPassword("");  
+      setPassword("");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center mt-5">
-        <Col md={6}>
-          <h1 className="text-center mb-4">Sign In</h1>
-          {showAlert && (
-            <Alert variant="success" className="fade-out">
-              {alertMessage}
-            </Alert>
-          )}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </Form.Group>
+    <div className="container" style={containerDivStyle}>
+      <Container>
+        <Row className="justify-content-center mt-5">
+          <Col md={6}>
+            <h1 className="text-center mb-4 mt-2" style={{ color: "#005055" }}>
+              Sign in
+            </h1>
+            {showAlert && (
+              <Alert variant="success" className="fade-out">
+                {alertMessage}
+              </Alert>
+            )}
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formEmail">
+                <Form.Label style={headerStyle}>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={fieldStyle}
+                />
+              </Form.Group>
 
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
+              <Form.Group controlId="formPassword">
+                <Form.Label style={headerStyle}>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  style={fieldStyle}
+                />
+              </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100 mt-3">
-              Sign In
-            </Button>
-
-            <p className="mt-3 text-center">
-              If you have not created an account,{" "}
-              <Link to="/sign-up">create one</Link>.
-            </p>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+              <Button
+                variant="primary"
+                type="submit"
+                className="w-100 mt-3"
+                style={buttonColors}
+              >
+                Sign in
+              </Button>
+              <p className="mt-3 text-center" style={{ color: "#007D69" }}>
+                If you have not created an account,
+                <Link to="/sign-up">create one</Link>.
+              </p>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
 export default SignIn;
+
+//
+const containerDivStyle = {
+  backgroundColor: "#f0f0f0",
+  width: "1250px",
+  height: "650px",
+  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
+  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const buttonColors = {
+  background: "linear-gradient(to right, #2493B3, #60BA5E)",
+  height: " 58px",
+  borderRadius: "0 0 0 10px",
+};
+
+const fieldStyle = {
+  height: "51px",
+  borderRadius: "0 0 0 10px",
+};
+
+const headerStyle = {
+  color: "#005055",
+};

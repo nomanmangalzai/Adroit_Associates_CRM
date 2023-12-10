@@ -208,7 +208,6 @@ const EmailList = () => {
   const responses = [];
   const projectData = [];
 
-
   return (
     <Container>
       <h2 className="text-center mb-4">Email List for Verification</h2>
@@ -224,15 +223,24 @@ const EmailList = () => {
           </Alert>
         </Fade>
       )}
-      <Table striped bordered hover>
+      <Table
+        style={{
+          borderTopRightRadius: "10px",
+          borderTopLeftRadius: "10px",
+          overflow: "hidden",
+        }}
+        striped
+        bordered
+        hover
+      >
         <thead>
           <tr>
-            <th>#</th>
-            <th>Recipient</th>
-            <th>Subject</th>
-            <th>Message</th>
-            <th>Scheduled Send Time</th>
-            <th>Actions</th>
+            <th style={thStyle}>#</th>
+            <th style={thStyle}>Recipient</th>
+            <th style={thStyle}>Subject</th>
+            <th style={thStyle}>Message</th>
+            <th style={thStyle}>Scheduled Send Time</th>
+            <th style={thStyle}>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -305,12 +313,14 @@ const EmailList = () => {
                       onClick={() =>
                         handleVerifyEmail(email._id, firstName, lastName)
                       }
+                      style={buttonColors}
                     >
                       Verify Email
                     </Button>
                     <Button
                       variant="danger"
                       onClick={() => handleRejectEmail(email._id)}
+                      style={buttonColors}
                     >
                       Reject Email
                     </Button>
@@ -325,6 +335,7 @@ const EmailList = () => {
                           email.scheduledSendTime
                         )
                       }
+                      style={buttonColors}
                     >
                       Edit
                     </Button>
@@ -340,3 +351,17 @@ const EmailList = () => {
 };
 
 export default EmailList;
+
+//
+const buttonColors = {
+  background: "linear-gradient(to right, #2493B3, #60BA5E)",
+};
+
+const thStyle = {
+  backgroundColor: "#007777",
+  color: "white",
+  border: "none" /* Remove all borders */,
+  height: "45px",
+  lineHeight: "20px", // Set line-height to match the height
+  fontStyle: "italic", // Add this line to apply italic font style
+};

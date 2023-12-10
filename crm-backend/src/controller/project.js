@@ -67,7 +67,15 @@ const postProject = async (req, res, next) => {
             scheduledSendTime: allProjectsDates[i],
           });
           await newScheduledEmail.save();
+          const projectId = allProjects[i]._id;
+          console.log("id =" + projectId);
+          const updatedProject = await Project.findOneAndUpdate(
+            { _id: projectId },
+            { $set: { oneYear: true } },
+            { new: true } // This option returns the updated document
+          );
 
+          console.log(updatedProject);
           // if (project) {
           //EMAIL WERE ALREADY SENT
           //only send a response
@@ -146,6 +154,7 @@ const postProject = async (req, res, next) => {
 const job = schedule.scheduleJob("0 8-11,13-16 * * *", () => {
   postProject("Automated Email");
 });
+postProject("Automated Email");
 
 //fetch projects
 const viewProjects = async (req, res, next) => {

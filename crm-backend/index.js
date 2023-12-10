@@ -46,16 +46,3 @@ connectToMongoDB()
     console.error("Failed to start the server:", err);
   });
 
-// mongoose
-//   .connect(uri, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log("Database connected");
-//     // Start the server after successful database connection
-//     app.listen(PORT, console.log(`Server started on port ${PORT}`));
-//   })
-//   .catch((err) => console.log("Database connection error:", err));
-
-// // app.listen(PORT, console.log(`Server Started on port ${PORT}`));

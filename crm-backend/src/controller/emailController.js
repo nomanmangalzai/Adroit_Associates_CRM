@@ -376,7 +376,7 @@ const rejectEmail = async (req, res, next) => {
 };
 
 //
-updateRequestedEmail = async (req, res, next) => {
+const updateRequestedEmail = async (req, res, next) => {
   console.log("updateRequestedEmail has been called");
   const emailId = req.params.emailId;
   console.log(emailId);

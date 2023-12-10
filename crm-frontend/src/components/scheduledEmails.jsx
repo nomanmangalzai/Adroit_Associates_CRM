@@ -77,30 +77,44 @@ const EmailList = () => {
   };
 
   return (
-    <Container>
-      <h2 className="text-center mb-4">Email List</h2>
-      <ListGroup>
-        {emails.map((email) => (
-          <ListGroup.Item
-            key={email._id}
-            className="bg-light p-3 mb-3"
-            style={{ fontFamily: "Verdana" }}
-          >
-            <strong className="text-primary">Recipient:</strong>{" "}
-            {email.recipient}
-            <br />
-            <strong className="text-success">Subject:</strong> {email.subject}
-            <br />
-            <strong className="text-danger">Message:</strong> {email.message}
-            <br />
-            <strong className="text-purple">Scheduled Send Time:</strong>{" "}
-            {formatTime(email.scheduledSendTime)}
-            <br />
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Container>
+    <>
+      <Container className="mt-5" style={containerDivStyle}>
+        <h2 className="text-center mb-4">Email List</h2>
+        <ListGroup>
+          {emails.map((email) => (
+            <ListGroup.Item
+              key={email._id}
+              className="bg-light p-3 mb-3"
+              style={{ fontFamily: "Verdana" }}
+            >
+              <strong style={headerStyle}>Recipient:</strong> {email.recipient}
+              <br />
+              <strong style={headerStyle}>Subject:</strong> {email.subject}
+              <br />
+              <strong style={headerStyle}>Message:</strong> {email.message}
+              <br />
+              <strong style={headerStyle}>Scheduled Send Time:</strong>{" "}
+              {formatTime(email.scheduledSendTime)}
+              <br />
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </Container>
+    </>
   );
 };
 
 export default EmailList;
+
+//
+const headerStyle = {
+  color: "#007D69",
+};
+
+const containerDivStyle = {
+  backgroundColor: "#f0f0f0",
+  width: "1053px",
+  height: "700px",
+  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
+  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+};

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Container, Row, Alert } from "react-bootstrap";
+import { Container, Row, Alert, Button } from "react-bootstrap";
 
 const ProjectForm = () => {
   //state
@@ -80,124 +80,176 @@ const ProjectForm = () => {
   };
 
   return (
-    <Container>
-      <Row>
-        <h2 className="text-center">Project Form</h2>
-        {showSuccessAlert && (
-          <Alert
-            variant="success"
-            onClose={() => setShowSuccessAlert(false)}
-            dismissible
-          >
-            {successMessage}
-          </Alert>
-        )}
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <div className="form-group">
-                <label>Project Name:</label>
-                <Field
-                  type="text"
-                  name="projectName"
-                  className="form-control"
-                />
-                <ErrorMessage
-                  name="projectName"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Client:</label>
-                <Field type="text" name="client" className="form-control" />
-                <ErrorMessage
-                  name="client"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Client POC:</label>
-                <Field type="text" name="clientPOC" className="form-control" />
-                <ErrorMessage
-                  name="clientPOC"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-              <div className="form-group">
-                <label>Client POC E.Address:</label>
-                <Field
-                  type="email"
-                  name="pocEmailAddress"
-                  className="form-control"
-                />
-                <ErrorMessage
-                  name="pocEmailAddress"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Project Starting Date:</label>
-                <Field
-                  type="datetime-local"
-                  name="projectStartingDate"
-                  className="form-control"
-                />
-                <ErrorMessage
-                  name="projectStartingDate"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Project End Date:</label>
-                <Field
-                  type="datetime-local"
-                  name="projectEndDate"
-                  className="form-control"
-                />
-                <ErrorMessage
-                  name="projectEndDate"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Assigned To:</label>
-                <Field type="text" name="assignedTo" className="form-control" />
-                <ErrorMessage
-                  name="assignedTo"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{ width: "100%" }}
-                disabled={isSubmitting}
-              >
-                Save Project
-              </button>
-            </Form>
+    <div className="container mt-5" style={containerDivStyle}>
+      <Container>
+        <Row>
+          <h1 className="text-center mt-3" style={headerStyle}>
+            Project Form
+          </h1>
+          {showSuccessAlert && (
+            <Alert
+              variant="success"
+              onClose={() => setShowSuccessAlert(false)}
+              dismissible
+            >
+              {successMessage}
+            </Alert>
           )}
-        </Formik>
-      </Row>
-    </Container>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="form-group">
+                  <label style={labelColor}>Project Name:</label>
+                  <Field
+                    type="text"
+                    name="projectName"
+                    className="form-control"
+                    style={fieldStyle}
+                  />
+                  <ErrorMessage
+                    name="projectName"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label style={labelColor}>Client:</label>
+                  <Field
+                    type="text"
+                    name="client"
+                    className="form-control"
+                    style={fieldStyle}
+                  />
+                  <ErrorMessage
+                    name="client"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label style={labelColor}>Client POC:</label>
+                  <Field
+                    type="text"
+                    name="clientPOC"
+                    className="form-control"
+                    style={fieldStyle}
+                  />
+                  <ErrorMessage
+                    name="clientPOC"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <label style={labelColor}>Client POC E.Address:</label>
+                  <Field
+                    type="email"
+                    name="pocEmailAddress"
+                    className="form-control"
+                    style={fieldStyle}
+                  />
+                  <ErrorMessage
+                    name="pocEmailAddress"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label style={labelColor}>Project Starting Date:</label>
+                  <Field
+                    type="datetime-local"
+                    name="projectStartingDate"
+                    className="form-control"
+                    style={fieldStyle}
+                  />
+                  <ErrorMessage
+                    name="projectStartingDate"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label style={labelColor}>Project End Date:</label>
+                  <Field
+                    type="datetime-local"
+                    name="projectEndDate"
+                    className="form-control"
+                    style={fieldStyle}
+                  />
+                  <ErrorMessage
+                    name="projectEndDate"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label style={labelColor}>Assigned To:</label>
+                  <Field
+                    type="text"
+                    name="assignedTo"
+                    className="form-control"
+                    style={fieldStyle}
+                  />
+                  <ErrorMessage
+                    name="assignedTo"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isSubmitting}
+                  style={{ width: "100%", marginTop: "25px", ...buttonstyle }}
+                >
+                  Save Project
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
 export default ProjectForm;
+
+//
+const containerDivStyle = {
+  backgroundColor: "#f0f0f0",
+  width: "1053px",
+  height: "700px",
+  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
+  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+};
+
+const buttonstyle = {
+  background: "linear-gradient(to right, #2493B3, #60BA5E)",
+  height: " 58px",
+  borderRadius: "0 0 0 10px",
+};
+
+const labelColor = {
+  color: "#647A7D",
+};
+
+const headerStyle = {
+  color: "#005055",
+};
+
+const fieldStyle = {
+  height: "51px",
+  borderRadius: "0 0 0 10px",
+};
+
+// borderBottomLeftRadius: "10px", // Adjust the value for the desired curvature

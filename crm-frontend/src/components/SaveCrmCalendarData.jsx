@@ -35,9 +35,11 @@ const initialValues = {
   time: "",
   additionalNotes: "",
 };
+//
 
 const SaveCrmCalendarData = () => {
   const [responseMessage, setResponseMessage] = useState("");
+  const [divHeight, setDivHeight] = useState("780px");
 
   const handleSubmit = async (values) => {
     try {
@@ -47,6 +49,10 @@ const SaveCrmCalendarData = () => {
       // Reset form values
       if (response.ok) {
         // You can add your logic here to handle form reset
+      }
+      ////////////////////////////////////////////////////
+      if (validationSchema.isValidSync(values)) {
+        setDivHeight("1100px"); // Set the height for successful validation
       }
     } catch (error) {
       console.error("Failed to save data", error);
@@ -84,176 +90,198 @@ const SaveCrmCalendarData = () => {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col md={6}>
-          <h1 className="text-center">CRM Calendar Form</h1>
-          {responseMessage && (
-            <Alert
-              variant={responseMessage.ok ? "success" : "danger"}
-              onClose={() => setResponseMessage("")}
-              dismissible
-            >
-              {responseMessage}
-            </Alert>
-          )}
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <BootstrapForm.Group controlId="organization">
-                  <BootstrapForm.Label>Organization</BootstrapForm.Label>
-                  <Field
-                    type="text"
-                    id="organization"
-                    name="organization"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="organization"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="contactTitle">
-                  <BootstrapForm.Label>Contact Title</BootstrapForm.Label>
-                  <Field
-                    type="text"
-                    id="contactTitle"
-                    name="contactTitle"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="contactTitle"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="phoneNumber">
-                  <BootstrapForm.Label>Phone Number</BootstrapForm.Label>
-                  <Field
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="phoneNumber"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="emailAddress">
-                  <BootstrapForm.Label>Email Address</BootstrapForm.Label>
-                  <Field
-                    type="email"
-                    id="emailAddress"
-                    name="emailAddress"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="emailAddress"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="meetingSubject">
-                  <BootstrapForm.Label>Meeting Subject</BootstrapForm.Label>
-                  <Field
-                    type="text"
-                    id="meetingSubject"
-                    name="meetingSubject"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="meetingSubject"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="clientPOC">
-                  <BootstrapForm.Label>Client POC</BootstrapForm.Label>
-                  <Field
-                    type="text"
-                    id="clientPOC"
-                    name="clientPOC"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="clientPOC"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="date">
-                  <BootstrapForm.Label>Date</BootstrapForm.Label>
-                  <Field
-                    type="date"
-                    id="date"
-                    name="date"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="date"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="time">
-                  <BootstrapForm.Label>Time</BootstrapForm.Label>
-                  <Field
-                    type="time"
-                    id="time"
-                    name="time"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="time"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <BootstrapForm.Group controlId="additionalNotes">
-                  <BootstrapForm.Label>Additional Notes</BootstrapForm.Label>
-                  <Field
-                    as="textarea"
-                    id="additionalNotes"
-                    name="additionalNotes"
-                    className="form-control"
-                    rows={3}
-                  />
-                  <ErrorMessage
-                    name="additionalNotes"
-                    component="div"
-                    className="text-danger"
-                  />
-                </BootstrapForm.Group>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="btn btn-primary w-100"
-                >
-                  Submit
-                </Button>
-              </Form>
+    <div
+      className="container"
+      style={{ height: `${divHeight}`, ...containerDivStyle }}
+    >
+      <Container className="mt-3">
+        <Row className="justify-content-center">
+          <Col md={6}>
+            <h1 className="text-center">CRM Calendar Form</h1>
+            {responseMessage && (
+              <Alert
+                variant={responseMessage.ok ? "success" : "danger"}
+                onClose={() => setResponseMessage("")}
+                dismissible
+              >
+                {responseMessage}
+              </Alert>
             )}
-          </Formik>
-        </Col>
-      </Row>
-    </Container>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting }) => (
+                <Form>
+                  <BootstrapForm.Group controlId="organization">
+                    <BootstrapForm.Label>Organization</BootstrapForm.Label>
+                    <Field
+                      type="text"
+                      id="organization"
+                      name="organization"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="organization"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="contactTitle">
+                    <BootstrapForm.Label>Contact Title</BootstrapForm.Label>
+                    <Field
+                      type="text"
+                      id="contactTitle"
+                      name="contactTitle"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="contactTitle"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="phoneNumber">
+                    <BootstrapForm.Label>Phone Number</BootstrapForm.Label>
+                    <Field
+                      type="text"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="phoneNumber"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="emailAddress">
+                    <BootstrapForm.Label>Email Address</BootstrapForm.Label>
+                    <Field
+                      type="email"
+                      id="emailAddress"
+                      name="emailAddress"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="emailAddress"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="meetingSubject">
+                    <BootstrapForm.Label>Meeting Subject</BootstrapForm.Label>
+                    <Field
+                      type="text"
+                      id="meetingSubject"
+                      name="meetingSubject"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="meetingSubject"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="clientPOC">
+                    <BootstrapForm.Label>Client POC</BootstrapForm.Label>
+                    <Field
+                      type="text"
+                      id="clientPOC"
+                      name="clientPOC"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="clientPOC"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="date">
+                    <BootstrapForm.Label>Date</BootstrapForm.Label>
+                    <Field
+                      type="date"
+                      id="date"
+                      name="date"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="date"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="time">
+                    <BootstrapForm.Label>Time</BootstrapForm.Label>
+                    <Field
+                      type="time"
+                      id="time"
+                      name="time"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="time"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <BootstrapForm.Group controlId="additionalNotes">
+                    <BootstrapForm.Label>Additional Notes</BootstrapForm.Label>
+                    <Field
+                      as="textarea"
+                      id="additionalNotes"
+                      name="additionalNotes"
+                      className="form-control"
+                      rows={3}
+                    />
+                    <ErrorMessage
+                      name="additionalNotes"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </BootstrapForm.Group>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn btn-primary w-100"
+                    style={buttonColors}
+                  >
+                    Submit
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
 export default SaveCrmCalendarData;
+
+//
+const buttonColors = {
+  background: "linear-gradient(to right, #2493B3, #60BA5E)",
+  // height: " 58px",
+  borderRadius: "0 0 0 10px",
+};
+
+const containerDivStyle = {
+  backgroundColor: "#f0f0f0",
+  // width: "1053px",
+  width: "1250px",
+  // height: "750px",
+  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
+  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+};

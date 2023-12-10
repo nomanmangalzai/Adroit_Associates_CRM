@@ -1,9 +1,10 @@
 import React from "react";
+import Alert from "./Alert";
 
 function Test() {
   return (
     <div>
-      <h1>Test</h1>
+      <Alert name="Ahmad Shakeel Usmani" />
     </div>
   );
 }

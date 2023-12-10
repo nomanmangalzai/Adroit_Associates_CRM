@@ -102,19 +102,25 @@ const SuperAdminScreen = () => {
       ) : (
         <div className="d-flex flex-wrap">
           {userRequests.map((user) => (
-            <Card key={user._id} className="m-2" style={{ width: "18rem" }}>
+            <Card
+              key={user._id}
+              className="m-2"
+              style={{ width: "18rem", ...cardStyle }}
+            >
               <Card.Body>
                 <Card.Title>{`${user.firstName} ${user.lastName}`}</Card.Title>
                 <Card.Text>Email: {user.email}</Card.Text>
                 <Button
                   variant="success"
                   onClick={() => approveUserRequest(user._id)}
+                  style={{marginRight:"1px",...buttonColors}}
                 >
                   Approve
                 </Button>
                 <Button
                   variant="danger"
                   onClick={() => rejectUserRequest(user._id)}
+                  style={{width:"95px",...buttonColors}}
                 >
                   Reject
                 </Button>
@@ -128,3 +134,13 @@ const SuperAdminScreen = () => {
   // }
 };
 export default SuperAdminScreen;
+
+//
+const buttonColors = {
+  background: "linear-gradient(to right, #2493B3, #60BA5E)",
+};
+
+const cardStyle = {
+  borderTopRightRadius: "20px", // Adjust the values for the desired curvature
+  borderBottomLeftRadius: "20px", // Adjust the values for the desired curvature
+};

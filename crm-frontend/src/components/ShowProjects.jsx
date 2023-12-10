@@ -39,16 +39,26 @@ const ProjectData = () => {
     <Container>
       <Row>
         <h2 className="text-center">Project Data</h2>
-        <Table striped bordered hover>
+        <Table
+          striped
+          bordered
+          hover
+          style={{
+            borderCollapse: "collapse",
+            borderTopRightRadius: "10px",
+            borderTopLeftRadius: "10px",
+            overflow: "hidden",
+          }}
+        >
           <thead>
             <tr>
-              <th>Project Name</th>
-              <th>Client</th>
-              <th>Client POC</th>
-              <th>POC E.Address</th>
-              <th>Starting Date</th>
-              <th>End Date</th>
-              <th>Assigned To</th>
+              <th style={thStyle}>Project Name</th>
+              <th style={thStyle}>Client</th>
+              <th style={thStyle}>Client POC</th>
+              <th style={thStyle}>POC E.Address</th>
+              <th style={thStyle}>Starting Date</th>
+              <th style={thStyle}>End Date</th>
+              <th style={thStyle}>Assigned To</th>
             </tr>
           </thead>
           <tbody>
@@ -71,3 +81,14 @@ const ProjectData = () => {
 };
 
 export default ProjectData;
+
+//
+const thStyle = {
+  backgroundColor: "#007777",
+  color: "white",
+  border: "none" /* Remove all borders */,
+  height: "45px",
+  lineHeight: "45px", // Set line-height to match the height
+  fontStyle: "italic", // Add this line to apply italic font style
+};
+

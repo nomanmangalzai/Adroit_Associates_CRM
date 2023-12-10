@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const scheduledEmailSchema = new mongoose.Schema({
   recipient: {
@@ -12,9 +12,9 @@ const scheduledEmailSchema = new mongoose.Schema({
   },
   scheduledSendTime: {
     type: Date,
-  }
+  },
 });
 
-const emailSchema = mongoose.model('scheduledEmails', scheduledEmailSchema);
+const emailSchema = mongoose.model("scheduledEmails", scheduledEmailSchema);
 
 module.exports = emailSchema;

@@ -7,13 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
-//
-// const callBackendAPI = () => {
-//   console.log("callBackendAPI has been called");
-//   // Make your API call here
-//   // You can use libraries like Axios or the built-in fetch API to make the HTTP request
-// };
-// //
 const callBackendAPI = () => {
   console.log("callBackendAPI has been called");
 
@@ -62,9 +55,12 @@ const callBackendAPI = () => {
     });
 };
 
+//retrieve token
+const token = localStorage.getItem("token");
 // Call the function to make the API request
-callBackendAPI();
-
+if (token) {
+  callBackendAPI();
+}
 //
 // call above
 // Schedule the API call to run every hour at the 00-minute mark

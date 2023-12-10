@@ -136,7 +136,7 @@ const signIn = async (req, res, next) => {
       },
     };
     let userInfo = await users.findOne({ email: email }).select("-password");
-    jwt.sign(payload, secret, { expiresIn: "1 days" }, (err, token) => {
+    jwt.sign(payload, secret, { expiresIn: "1d" }, (err, token) => {
       if (err) throw err;
       console.log(token);
       res.json({
