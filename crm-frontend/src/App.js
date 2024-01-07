@@ -192,7 +192,7 @@ function App() {
                 </>
               )}
             </ul>
-            <ul className="nav-links ml-auto">
+            <ul className="ml-auto nav-links">
               {!isLoggedIn && (
                 <li>
                   <Link

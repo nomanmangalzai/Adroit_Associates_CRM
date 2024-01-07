@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const crmCalendarSchema = new mongoose.Schema({
   organization: {
     type: String,
-    unique: true
-  
+    unique: true,
   },
   contactTitle: {
     type: String,
@@ -23,8 +22,8 @@ const crmCalendarSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Scheduled', 'Cancelled', 'Completed'],
-    default: 'Scheduled'
+    enum: ["Scheduled", "Cancelled", "Completed"],
+    default: "Scheduled",
   },
   date: {
     type: Date,
@@ -33,10 +32,10 @@ const crmCalendarSchema = new mongoose.Schema({
     type: String,
   },
   additionalNotes: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-const crmCalendar = mongoose.model('crmCalendar', crmCalendarSchema);
+const crmCalendar = mongoose.model("crmCalendar", crmCalendarSchema);
 
 module.exports = crmCalendar;

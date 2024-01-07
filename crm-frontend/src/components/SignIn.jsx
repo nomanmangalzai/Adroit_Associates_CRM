@@ -89,9 +89,12 @@ const SignIn = () => {
   return (
     <div className="container" style={containerDivStyle}>
       <Container>
-        <Row className="justify-content-center mt-5">
+        <Row className="mt-5 justify-content-center">
           <Col md={6}>
-            <h1 className="text-center mb-4 mt-2" style={{ color: "#005055" }}>
+            <h1
+              className="mt-2 mb-4 font-serif text-center"
+              style={{ color: "#005055" }}
+            >
               Sign in
             </h1>
             {showAlert && (
@@ -101,10 +104,13 @@ const SignIn = () => {
             )}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formEmail">
-                <Form.Label style={headerStyle}>Email address</Form.Label>
+                <Form.Label className="font-serif" style={headerStyle}>
+                  Email address
+                </Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="enter email"
+                  className="font-mono"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -113,10 +119,13 @@ const SignIn = () => {
               </Form.Group>
 
               <Form.Group controlId="formPassword">
-                <Form.Label style={headerStyle}>Password</Form.Label>
+                <Form.Label className="font-serif" style={headerStyle}>
+                  Password
+                </Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Password"
+                  placeholder="password"
+                  className="font-mono"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -127,12 +136,15 @@ const SignIn = () => {
               <Button
                 variant="primary"
                 type="submit"
-                className="w-100 mt-3"
+                className="mt-3 w-100"
                 style={buttonColors}
               >
                 Sign in
               </Button>
-              <p className="mt-3 text-center" style={{ color: "#007D69" }}>
+              <p
+                className="mt-3 font-mono text-center"
+                style={{ color: "#007D69" }}
+              >
                 If you have not created an account,
                 <Link to="/sign-up">create one</Link>.
               </p>
@@ -166,6 +178,7 @@ const buttonColors = {
 const fieldStyle = {
   height: "51px",
   borderRadius: "0 0 0 10px",
+  fontSize: "0.75rem",
 };
 
 const headerStyle = {

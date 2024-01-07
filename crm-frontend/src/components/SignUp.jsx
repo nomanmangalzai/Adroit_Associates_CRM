@@ -81,7 +81,7 @@ const Signup = () => {
     <Container className="container mt-5" style={containerDivStyle}>
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
-          <h1 className="text-center mt-3">Signup</h1>
+          <h1 className="text-center mt-3 font-serif">Signup</h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -89,13 +89,17 @@ const Signup = () => {
           >
             <Form as={BootstrapForm}>
               <BootstrapForm.Group controlId="firstName">
-                <BootstrapForm.Label style={headerStyle}>
+                <BootstrapForm.Label
+                  className="font-serif "
+                  style={headerStyle}
+                >
                   First Name
                 </BootstrapForm.Label>
                 <Field
                   type="text"
                   name="firstName"
-                  className="form-control"
+                  placeholder="enter your first name"
+                  className="form-control font-mono "
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -106,13 +110,14 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="lastName">
-                <BootstrapForm.Label style={headerStyle}>
+                <BootstrapForm.Label className="font-serif" style={headerStyle}>
                   Last Name
                 </BootstrapForm.Label>
                 <Field
                   type="text"
                   name="lastName"
-                  className="form-control"
+                  placeholder="enter your last name"
+                  className="form-control font-mono"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -123,13 +128,14 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="email">
-                <BootstrapForm.Label style={headerStyle}>
-                  Email
+                <BootstrapForm.Label className="font-serif" style={headerStyle}>
+                  Email address
                 </BootstrapForm.Label>
                 <Field
                   type="email"
                   name="email"
-                  className="form-control"
+                  placeholder="enter your email address"
+                  className="form-control font-mono"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -140,13 +146,14 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="password">
-                <BootstrapForm.Label style={headerStyle}>
+                <BootstrapForm.Label className="font-serif" style={headerStyle}>
                   Password
                 </BootstrapForm.Label>
                 <Field
                   type="password"
                   name="password"
-                  className="form-control"
+                  placeholder="password"
+                  className="form-control font-mono"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -157,13 +164,14 @@ const Signup = () => {
               </BootstrapForm.Group>
 
               <BootstrapForm.Group controlId="confirmPassword">
-                <BootstrapForm.Label style={headerStyle}>
+                <BootstrapForm.Label className="font-serif" style={headerStyle}>
                   Confirm Password
                 </BootstrapForm.Label>
                 <Field
                   type="password"
                   name="confirmPassword"
-                  className="form-control"
+                  placeholder="confirm password"
+                  className="placeholder-text-sm text-gray-500 form-control font-mono"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -217,6 +225,7 @@ const buttonColors = {
 const fieldStyle = {
   height: "51px",
   borderRadius: "0 0 0 10px",
+  fontSize: "0.75rem",
 };
 
 const headerStyle = {
