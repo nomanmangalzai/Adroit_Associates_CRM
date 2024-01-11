@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
@@ -13,12 +12,12 @@ const CrmCalendarData = () => {
     fetchCrmData();
   }, []);
 
-  const CrmCalendarData = () => {
-    const [crmData, setCrmData] = useState([]);
-    const [selectedItemId, setSelectedItemId] = useState(null);
+  // const CrmCalendarData = () => {
+  //   const [crmData, setCrmData] = useState([]);
+  //   const [selectedItemId, setSelectedItemId] = useState(null);
 
-    // ...
-  };
+  //   // ...
+  // };
 
   const fetchCrmData = async () => {
     const token = localStorage.getItem("token");
@@ -165,41 +164,32 @@ const CrmCalendarData = () => {
   };
 
   return (
-    <div className="crm-calendar wrapper">
+    <div className="overflow-x-auto sm:overflow-x-auto md:overflow-x-auto lg:overflow-x-auto xl:overflow-x-auto">
       <div style={{ textAlign: "center" }}>
         <h1 style={{ color: "#005055" }}>CRM Calendar Data</h1>
       </div>
-      <Table
-        style={{
-          borderTopRightRadius: "15px",
-          borderTopLeftRadius: "10px",
-          overflow: "hidden",
-        }}
-        striped
-        bordered
-        hover
-      >
-        <thead>
+      <table className="w-full bg-white border border-gray-300 rounded table-auto">
+        <thead className="text-white" style={{ backgroundColor: "#005055" }}>
           <tr>
-            <th style={thStyle}>#</th>
-            <th style={thStyle}>Organization</th>
-            <th style={thStyle}>Contact Title</th>
-            <th style={thStyle}>Phone Number</th>
-            <th style={thStyle}>Email Address</th>
-            <th style={thStyle}>Meeting Subject</th>
-            <th style={thStyle}>Client POC</th>
-            <th style={thStyle}>Status</th>
-            <th style={thStyle}>Date</th>
-            <th style={thStyle}>Time</th>
-            <th style={thStyle}>Additional Notes</th>
-            <th style={thStyle}>Actions</th>
+            <th className="p-3 text-left">#</th>
+            <th className="p-3 text-left">Organization</th>
+            <th className="p-3 text-left">Contact Title</th>
+            <th className="p-3 text-left">Phone Number</th>
+            <th className="p-3 text-left">Email Address</th>
+            <th className="p-3 text-left">Meeting Subject</th>
+            <th className="p-3 text-left">Client POC</th>
+            <th className="p-3 text-left">Status</th>
+            <th className="p-3 text-left">Date</th>
+            <th className="p-3 text-left">Time</th>
+            <th className="p-3 text-left">Additional Notes</th>
+            <th className="p-3 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
           {crmData.map((dataItem, index) => (
-            <tr key={index}>
-              <td style={tdStyle}>{index + 1}</td>
-              <td style={tdStyle}>
+            <tr key={index} className="border-b border-gray-300">
+              <td className="p-3">{index + 1}</td>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="text"
@@ -213,7 +203,7 @@ const CrmCalendarData = () => {
                   dataItem.organization
                 )}
               </td>
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="text"
@@ -226,7 +216,7 @@ const CrmCalendarData = () => {
                   dataItem.contactTitle
                 )}
               </td>
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="text"
@@ -239,7 +229,7 @@ const CrmCalendarData = () => {
                   dataItem.phoneNumber
                 )}
               </td>
-              <td style={mergedStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="text"
@@ -258,13 +248,13 @@ const CrmCalendarData = () => {
                         dataItem.time
                       )
                     }
-                    style={{ color: "#7FA7AA" }}
+                    className="text-teal-500"
                   >
                     {dataItem.emailAddress}
                   </a>
                 )}
               </td>
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="text"
@@ -277,7 +267,7 @@ const CrmCalendarData = () => {
                   dataItem.meetingSubject
                 )}
               </td>
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="text"
@@ -290,7 +280,7 @@ const CrmCalendarData = () => {
                   dataItem.clientPOC
                 )}
               </td>
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     as="select"
@@ -305,10 +295,7 @@ const CrmCalendarData = () => {
                   dataItem.status
                 )}
               </td>
-              {/* <td style={tdStyle}>
-                {new Date(dataItem.date).toLocaleDateString()}
-              </td> */}
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="datetime-local"
@@ -321,8 +308,7 @@ const CrmCalendarData = () => {
                   new Date(dataItem.date).toLocaleDateString()
                 )}
               </td>
-              {/* <td style={tdStyle}>{dataItem.time}</td> */}
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     type="text"
@@ -335,8 +321,7 @@ const CrmCalendarData = () => {
                   dataItem.time
                 )}
               </td>
-
-              <td style={tdStyle}>
+              <td className="p-3">
                 {dataItem.isEditable ? (
                   <Form.Control
                     as="textarea"
@@ -353,74 +338,60 @@ const CrmCalendarData = () => {
                   dataItem.additionalNotes
                 )}
               </td>
-              <td style={tdStyle}>
+              <td className="p-3 space-x-2">
                 {dataItem.isEditable ? (
-                  <button
-                    className="btn btn-success"
-                    onClick={() => handleSaveClick(index)}
-                    style={buttonColors}
-                  >
-                    Save
-                  </button>
+                  <>
+                    <button
+                      className="btn btn-success bg-gradient-to-r from-blue-500 to-green-500"
+                      onClick={() => handleSaveClick(index)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn btn-danger bg-gradient-to-r from-blue-500 to-green-500"
+                      onClick={() => handleDeleteClick(index)}
+                    >
+                      Delete
+                    </button>
+                  </>
                 ) : (
                   <Button
-                    className="btn btn-primary"
+                    className="btn btn-primary bg-gradient-to-r from-blue-500 to-green-500"
                     onClick={() => handleEditClick(index)}
-                    style={buttonColors}
                   >
                     Edit
                   </Button>
                 )}
               </td>
-              {crmData.map((dataItem, index) => (
-                <tr key={index}>
-                  <td>
-                    {dataItem.isEditable ? (
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleDeleteClick(index)}
-                        style={buttonColors}
-                      >
-                        Delete
-                      </button>
-                    ) : null}
-                  </td>
-                </tr>
-              ))}
             </tr>
           ))}
         </tbody>
-      </Table>
+      </table>
     </div>
   );
 };
 export default CrmCalendarData;
 
-const buttonColors = {
-  background: "linear-gradient(to right, #2493B3, #60BA5E)",
-};
 
-//
-const thStyle = {
-  backgroundColor: "#007777",
-  color: "white",
-  border: "none" /* Remove all borders */,
-  height: "45px",
-  lineHeight: "45px", // Set line-height to match the height
-  fontStyle: "italic", // Add this line to apply italic font style
-};
+// //
+// const thStyle = {
+//   backgroundColor: "#007777",
+//   color: "white",
+//   border: "none" /* Remove all borders */,
+//   height: "45px",
+//   lineHeight: "45px", // Set line-height to match the height
+//   fontStyle: "italic", // Add this line to apply italic font style
+// };
 
-const tbodyStyle = {
-  backgroundColor: "#f2f2f2",
-  color: "#333",
-};
+// const tbodyStyle = {
+//   backgroundColor: "#f2f2f2",
+//   color: "#333",
+// };
 
-const tableCellStyle = {
-  fontStyle: "italic",
-};
+// const tableCellStyle = {
+//   fontStyle: "italic",
+// };
 
-const tdStyle = {
-  color: "#005055",
-};
-
-const mergedStyle = { ...tableCellStyle, ...tdStyle };
+// const tdStyle = {
+//   color: "#005055",
+// };

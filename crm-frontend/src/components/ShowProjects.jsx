@@ -36,17 +36,16 @@ const ProjectData = () => {
   };
 
   return (
-    <Container>
+    <div className="container" style={combinedContainerStyle}>
       <Row>
         <h2 className="text-center">Project Data</h2>
         <Table
+          className="rounded-tr-3xl rounded-bl-3xl"
           striped
           bordered
           hover
           style={{
             borderCollapse: "collapse",
-            borderTopRightRadius: "10px",
-            borderTopLeftRadius: "10px",
             overflow: "hidden",
           }}
         >
@@ -76,7 +75,7 @@ const ProjectData = () => {
           </tbody>
         </Table>
       </Row>
-    </Container>
+    </div>
   );
 };
 
@@ -92,3 +91,16 @@ const thStyle = {
   fontStyle: "italic", // Add this line to apply italic font style
 };
 
+const containerDivStyle = {};
+
+const mediumAndLargeScreens = {
+  width: "1053px",
+  height: "720px",
+};
+
+// Combine styles based on screen size
+const combinedContainerStyle = {
+  ...containerDivStyle,
+  // Apply mediumAndLargeScreens styles only for medium and large screens
+  "@media only screen and (min-width: 768px)": mediumAndLargeScreens,
+};

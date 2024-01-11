@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { Container, ListGroup } from "react-bootstrap";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-});
+
 
 const fetchEmails = async () => {
   const token = localStorage.getItem("token");
@@ -54,29 +49,38 @@ const EmailHistory = () => {
 
     getEmails();
   }, []);
-
+  // bg-gray-100
   return (
-    <Container className="mt-5" style={containerDivStyle}>
-      <h2 className="text-center mb-4 ">Email List</h2>
-      <ListGroup>
-        {emails.map((email) => (
-          <ListGroup.Item
-            key={email._id}
-            className="bg-light p-3 mb-3"
-            style={{ fontFamily: "Verdana" }}
-          >
-            <strong style={headerStyle}>Recipient:</strong> {email.recipient}
-            <br />
-            <strong style={headerStyle}>Subject:</strong> {email.subject}
-            <br />
-            <strong style={headerStyle}>Message:</strong> {email.message}
-            <br />
-            <strong style={headerStyle}>Scheduled Send Time:</strong>{" "}
-            {formatTime(email.scheduledSendTime)}
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Container>
+    <div
+      style={containerDivStyle}
+      className="container mx-auto mt-5 bg-gray-100 lg:w-2/3 xl:w-1/2 rounded-tr-3xl rounded-bl-3xl sm:mx-4"
+    >
+      <div className="overflow-x-auto">
+        <h2 className="mb-4 text-3xl text-center text-black">Email List</h2>
+        <table className="w-full mt-4 border-collapse">
+          <thead className="text-white " style={{ backgroundColor: "#005055" }}>
+            <tr>
+              <th className="p-2 text-left ">Recipient</th>
+              <th className="p-2 text-left ">Subject</th>
+              <th className="p-2 text-left ">Message</th>
+              <th className="p-2 text-left ">Scheduled Send Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {emails.map((email) => (
+              <tr key={email._id} className="bg-gray-100">
+                <td className="p-2 border">{email.recipient}</td>
+                <td className="p-2 border">{email.subject}</td>
+                <td className="p-2 border">{email.message}</td>
+                <td className="p-2 border">
+                  {formatTime(email.scheduledSendTime)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 
@@ -89,9 +93,5 @@ const headerStyle = {
 };
 
 const containerDivStyle = {
-  backgroundColor: "#f0f0f0",
-  width: "1053px",
   height: "700px",
-  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
-  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
 };

@@ -7,7 +7,6 @@ import {
   Button,
 } from "react-bootstrap";
 import { Formik, Field, ErrorMessage, Form } from "formik";
-import Test from "./Test";
 
 const NewsletterForm = () => {
   const [subject, setSubject] = useState("");
@@ -57,11 +56,11 @@ const NewsletterForm = () => {
   };
 
   return (
-    <div className="container" style={containerDivStyle}>
-      <Container className="mt-5">
+    <div className="container bg-gray-200 md:w-1250 rounded-tr-3xl rounded-bl-3xl">
+      <Container className="mx-auto mt-5">
         <Row className="justify-content-center">
-          <Col xs={12} md={6}>
-            <h2 className="text-center mb-4">Send Email</h2>
+          <Col xs={12} md={8}>
+            <h2 className="mt-2 mb-1 text-center">Send Email</h2>
             <Formik
               initialValues={{
                 title: "Monthly Newsletter",
@@ -80,7 +79,6 @@ const NewsletterForm = () => {
                         id="title"
                         name="title"
                         className="form-control"
-                        style={fieldStyle}
                       />
                     </div>
                     <ErrorMessage
@@ -108,10 +106,10 @@ const NewsletterForm = () => {
                   </BootstrapForm.Group>
                   <div className="d-grid">
                     <Button
-                      // className="mb-1"
                       variant="primary"
                       type="submit"
                       disabled={isSubmitting}
+                      className="h-12 mb-3 rounded-b-md"
                       style={buttonColors}
                     >
                       {isSubmitting ? "Sending..." : "Send"}
@@ -122,7 +120,6 @@ const NewsletterForm = () => {
             </Formik>
           </Col>
         </Row>
-        {/* <Test></Test> */}
       </Container>
     </div>
   );
@@ -141,10 +138,8 @@ const buttonColors = {
 };
 
 const containerDivStyle = {
-  backgroundColor: "#f0f0f0",
-  // width: "1053px",
-  width: "1250px",
-  height: "700px",
+  // width: "1250px",
+  // height: "700px",
   borderTopRightRadius: "50px", // Adjust the values for the desired curvature
   borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
 };

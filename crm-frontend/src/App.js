@@ -1,6 +1,18 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
 import { Link, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  faBars,
+  faHome,
+  faEnvelope,
+  faClock,
+  faHistory,
+  faCalendarAlt,
+  faUser,
+  faCheck,
+  faProjectDiagram,
+  faNewspaper,
+} from "@fortawesome/free-solid-svg-icons";
 
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
@@ -14,6 +26,8 @@ import EmailVerificatoinList from "./components/EmailVerificatoinList";
 import Project from "./components/Project";
 import ShowProjects from "./components/ShowProjects";
 import Newsletter from "./components/NewsletterTemplate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ResponsiveComponent from "./components/ResponsiveComponent";
 
 //
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +36,6 @@ import { setPopupTrue, setPopupFalse } from "./redux/popup"; // Adjust the relat
 import PrivateRoutes from "./utils/PrivateRoutes";
 
 import "./App.css";
-import { Button } from "react-bootstrap";
-import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const navigate = useNavigate();
@@ -87,186 +99,340 @@ function App() {
   // Call the function to check and remove expired token when your app starts
   setInterval(checkAndRemoveExpiredToken, 60 * 60 * 1000); // 60 minutes * 60 seconds * 1000 milliseconds
   checkAndRemoveExpiredToken();
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
-    <div className="wrapper">
-      <div className="row">
-        <div className="col-sm-12 ">
-          <nav
-            className="navbar"
-            style={{ backgroundColor: "#005055", ...navbarStyle }}
-          >
-            <ul className="nav-links">
-              {isLoggedIn && (
-                <>
-                  <li className="nav-item">
-                    <Link
-                      to="/home-page"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/email-form"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Compose Email
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/show-scheduled-emails"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Scheduled Emails
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/show-emails-history"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      History
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/save-crm-calendar-data"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Post a Calendar
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/accept-user-account-request"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Account Requests
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/emails-to-be-verified"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Email Verification
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/projects"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Projects
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/view-projects"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      View Projects
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/newsleter-template"
-                      className="nav-link"
-                      style={{ color: "white" }}
-                    >
-                      Newsletter
-                    </Link>
-                  </li>
-                </>
-              )}
-            </ul>
-            <ul className="ml-auto nav-links">
-              {!isLoggedIn && (
-                <li>
-                  <Link
-                    to="/sign-in"
-                    className="nav-link"
-                    style={{ color: "white" }}
-                  >
-                    Sign in
-                  </Link>
-                </li>
-              )}
-              {isLoggedIn && (
-                <li>
-                  <Link
-                    to="/sign-in"
-                    className="nav-link"
-                    onClick={handleLogout}
-                    style={{ color: "white" }}
-                  >
-                    Logout
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </nav>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                isLoggedIn ? (
-                  <Navigate to="/home-page" />
-                ) : (
-                  <Navigate to="/sign-in" />
-                )
-              }
-            />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/sign-in" element={<SignIn onLogin={handleLogin} />} />
-
+    <>
+      <div>
+        {/* Mobile Navigation */}
+        <nav
+          className="navbar d-md-none"
+          style={{ backgroundColor: "#005055", ...navbarStyle }}
+        >
+          <div className="mobile-menu">
+            <button
+              className="mobile-menu-toggle"
+              onClick={handleMobileMenuToggle}
+            >
+              <FontAwesomeIcon icon={faBars} size="lg" color="white" />
+            </button>
+            {isMobileMenuOpen && (
+              <div className="mobile-menu-dropdown">
+                {isLoggedIn && (
+                  <>
+                    <li className="nav-item">
+                      <Link
+                        to="/home-page"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faHome} /> Home
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/email-form"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faEnvelope} /> Compose Email
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/show-scheduled-emails"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faClock} /> Scheduled Emails
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/show-emails-history"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faHistory} /> History
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/save-crm-calendar-data"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faCalendarAlt} /> Post a Calendar
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/accept-user-account-request"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faUser} /> Account Requests
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/emails-to-be-verified"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faCheck} /> Email Verification
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/projects"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faProjectDiagram} /> Projects
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/view-projects"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faProjectDiagram} /> View
+                        Projects
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/newsleter-template"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faNewspaper} /> Newsletter
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/responsive"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faNewspaper} />{" "}
+                        ResponsiveComponent
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {!isLoggedIn && (
+                  <>
+                    <li>
+                      <Link
+                        to="/sign-in"
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        Sign in
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <>
+                    <li>
+                      <Link
+                        to="/sign-in"
+                        className="nav-link"
+                        onClick={handleLogout}
+                        style={{ color: "white" }}
+                      >
+                        Logout
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </nav>
+        <nav
+          className="navbar d-none d-md-flex"
+          style={{ backgroundColor: "#005055", ...navbarStyle }}
+        >
+          <ul className="nav-links">
             {isLoggedIn && (
               <>
-                <Route path="/home-page" element={<Home />} />
-                <Route path="/email-form" element={<EmailForm />} />
-                <Route path="/show-scheduled-emails" element={<EmailList />} />
-                <Route path="/show-emails-history" element={<EmailHistory />} />
-                <Route
-                  path="/save-crm-calendar-data"
-                  element={<SaveCrmCalendarData />}
-                />
-                <Route path="/projects" element={<Project />} />
-                <Route path="/view-projects" element={<ShowProjects />} />
-                <Route path="/newsleter-template" element={<Newsletter />} />
+                <li className="nav-item">
+                  <Link
+                    to="/home-page"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/email-form"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Compose Email
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/show-scheduled-emails"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Scheduled Emails
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/show-emails-history"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    History
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/save-crm-calendar-data"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Post a Calendar
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/accept-user-account-request"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Account Requests
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/emails-to-be-verified"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Email Verification
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/projects"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Projects
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/view-projects"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    View Projects
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/newsleter-template"
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    Newsletter
+                  </Link>
+                </li>
               </>
             )}
-            <Route
-              path="/"
-              element={isLoggedIn ? <Home /> : <Navigate to="/sign-in" />}
-            />
-            <Route element={<PrivateRoutes />}>
-              <Route
-                element={<SignUpPermission />}
-                path="/accept-user-account-request"
-              />
-            </Route>
-            <Route element={<PrivateRoutes />}>
-              <Route
-                path="/emails-to-be-verified"
-                element={<EmailVerificatoinList />}
-              />
-            </Route>
-          </Routes>
-        </div>
+          </ul>
+          <ul className="ml-auto nav-links">
+            {!isLoggedIn && (
+              <li>
+                <Link
+                  to="/sign-in"
+                  className="nav-link"
+                  style={{ color: "white" }}
+                >
+                  Sign in
+                </Link>
+              </li>
+            )}
+            {isLoggedIn && (
+              <li>
+                <Link
+                  to="/sign-in"
+                  className="nav-link"
+                  onClick={handleLogout}
+                  style={{ color: "white" }}
+                >
+                  Logout
+                </Link>
+              </li>
+            )}
+          </ul>
+        </nav>
       </div>
-    </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/home-page" />
+            ) : (
+              <Navigate to="/sign-in" />
+            )
+          }
+        />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn onLogin={handleLogin} />} />
+
+        {isLoggedIn && (
+          <>
+            <Route path="/home-page" element={<Home />} />
+            <Route path="/email-form" element={<EmailForm />} />
+            <Route path="/show-scheduled-emails" element={<EmailList />} />
+            <Route path="/show-emails-history" element={<EmailHistory />} />
+            <Route
+              path="/save-crm-calendar-data"
+              element={<SaveCrmCalendarData />}
+            />
+            <Route path="/projects" element={<Project />} />
+            <Route path="/view-projects" element={<ShowProjects />} />
+            <Route path="/newsleter-template" element={<Newsletter />} />
+            <Route path="/responsive" element={<ResponsiveComponent />} />
+          </>
+        )}
+        <Route
+          path="/"
+          element={isLoggedIn ? <Home /> : <Navigate to="/sign-in" />}
+        />
+        <Route element={<PrivateRoutes />}>
+          <Route
+            element={<SignUpPermission />}
+            path="/accept-user-account-request"
+          />
+        </Route>
+        <Route element={<PrivateRoutes />}>
+          <Route
+            path="/emails-to-be-verified"
+            element={<EmailVerificatoinList />}
+          />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

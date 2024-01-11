@@ -78,13 +78,16 @@ const EmailList = () => {
 
   return (
     <>
-      <Container className="mt-5" style={containerDivStyle}>
-        <h2 className="text-center mb-4">Email List</h2>
+      <div
+        style={containerDivStyle}
+        className="container mt-5 bg-gray-200 rounded-tr-3xl rounded-bl-3xl"
+      >
+        <h2 className="mb-4 text-center">Email List</h2>
         <ListGroup>
           {emails.map((email) => (
             <ListGroup.Item
               key={email._id}
-              className="bg-light p-3 mb-3"
+              className="p-3 mb-3 bg-light"
               style={{ fontFamily: "Verdana" }}
             >
               <strong style={headerStyle}>Recipient:</strong> {email.recipient}
@@ -99,7 +102,7 @@ const EmailList = () => {
             </ListGroup.Item>
           ))}
         </ListGroup>
-      </Container>
+      </div>
     </>
   );
 };
@@ -112,9 +115,5 @@ const headerStyle = {
 };
 
 const containerDivStyle = {
-  backgroundColor: "#f0f0f0",
-  width: "1053px",
   height: "700px",
-  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
-  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
 };

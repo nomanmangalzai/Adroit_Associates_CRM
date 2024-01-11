@@ -209,17 +209,21 @@ const EmailList = () => {
   const projectData = [];
 
   return (
-    <Container>
-      <h2 className="text-center mb-4">Email List for Verification</h2>
+    <div className="container mx-auto">
+      <h2 className="mb-4 text-center">Email List for Verification</h2>
       {responseMessage && (
         <Fade in={showAlert}>
           <Alert
             variant="success"
-            className="text-center mb-4"
+            className="mb-4 text-center"
             dismissible
             onClose={() => setShowAlert(false)}
           >
-            {responseMessage}
+            {responseMessage}Home Compose Email Scheduled Emails History Post a
+            Calendar Account Requests Email Verification Projects View Projects
+            Newsletter Logout Email List for Verification # Recipient Subject
+            Message Scheduled Send Time Actions 1 alihamim765@gmail.com Thank
+            You Email
           </Alert>
         </Fade>
       )}
@@ -310,22 +314,23 @@ const EmailList = () => {
                   <>
                     <Button
                       variant="success"
+                      className="bg-gradient-to-r from-blue-500 to-green-500"
                       onClick={() =>
                         handleVerifyEmail(email._id, firstName, lastName)
                       }
-                      style={buttonColors}
                     >
                       Verify Email
                     </Button>
                     <Button
+                      className="bg-gradient-to-r from-blue-500 to-green-500"
                       variant="danger"
                       onClick={() => handleRejectEmail(email._id)}
-                      style={buttonColors}
                     >
                       Reject Email
                     </Button>
                     <Button
                       variant="info"
+                      className="w-20 bg-gradient-to-r from-blue-500 to-green-500"
                       onClick={() =>
                         handleEditEmail(
                           email._id,
@@ -335,7 +340,6 @@ const EmailList = () => {
                           email.scheduledSendTime
                         )
                       }
-                      style={buttonColors}
                     >
                       Edit
                     </Button>
@@ -346,16 +350,13 @@ const EmailList = () => {
           ))}
         </tbody>
       </Table>
-    </Container>
+    </div>
   );
 };
 
 export default EmailList;
 
 //
-const buttonColors = {
-  background: "linear-gradient(to right, #2493B3, #60BA5E)",
-};
 
 const thStyle = {
   backgroundColor: "#007777",

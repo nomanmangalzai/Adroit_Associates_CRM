@@ -80,10 +80,13 @@ const ProjectForm = () => {
   };
 
   return (
-    <div className="container mt-5" style={containerDivStyle}>
+    <div
+      className="container mt-5 bg-gray-200 rounded-tr-3xl rounded-bl-3xl"
+      style={combinedContainerStyle}
+    >
       <Container>
         <Row>
-          <h1 className="text-center mt-3" style={headerStyle}>
+          <h1 className="mt-3 text-center" style={headerStyle}>
             Project Form
           </h1>
           {showSuccessAlert && (
@@ -225,12 +228,18 @@ const ProjectForm = () => {
 export default ProjectForm;
 
 //
-const containerDivStyle = {
-  backgroundColor: "#f0f0f0",
+const containerDivStyle = {};
+
+const mediumAndLargeScreens = {
   width: "1053px",
-  height: "700px",
-  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
-  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+  height: "720px",
+};
+
+// Combine styles based on screen size
+const combinedContainerStyle = {
+  ...containerDivStyle,
+  // Apply mediumAndLargeScreens styles only for medium and large screens
+  "@media only screen and (min-width: 768px)": mediumAndLargeScreens,
 };
 
 const buttonstyle = {

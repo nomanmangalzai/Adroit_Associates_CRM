@@ -91,8 +91,8 @@ const SaveCrmCalendarData = () => {
 
   return (
     <div
-      className="container"
-      style={{ height: `${divHeight}`, ...containerDivStyle }}
+      className="container w-full bg-gray-200 sm:w-2/3 md:w-2/3 lg:w-2/3 xl:w-1/2 rounded-tr-3xl rounded-bl-3xl"
+      style={{ height: `${divHeight}` }}
     >
       <Container className="mt-3">
         <Row className="justify-content-center">
@@ -280,8 +280,6 @@ const buttonColors = {
 const containerDivStyle = {
   backgroundColor: "#f0f0f0",
   // width: "1053px",
-  width: "1250px",
+
   // height: "750px",
-  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
-  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
 };

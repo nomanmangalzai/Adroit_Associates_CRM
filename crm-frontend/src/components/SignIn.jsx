@@ -87,7 +87,10 @@ const SignIn = () => {
   };
 
   return (
-    <div className="container" style={containerDivStyle}>
+    <div
+      className="container bg-gray-200 rounded-tr-3xl rounded-bl-3xl"
+      style={combinedContainerStyle}
+    >
       <Container>
         <Row className="mt-5 justify-content-center">
           <Col md={6}>
@@ -160,14 +163,25 @@ export default SignIn;
 
 //
 const containerDivStyle = {
-  backgroundColor: "#f0f0f0",
-  width: "1250px",
-  height: "650px",
-  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
-  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
+  width: "100%", // Set to 100% for mobile screens
+  maxWidth: "1200px", // Adjust this value based on your design needs
+  height: "630px",
   justifyContent: "center",
   alignItems: "center",
 };
+const mobileStyles = {
+  width: "100%", // Adjust these styles for mobile screens
+  marginLeft: "10px !important",
+  marginRight: "5px !important",
+};
+
+// Combine styles based on screen size
+const combinedContainerStyle = {
+  ...containerDivStyle,
+  // Apply additional styles for smaller screens (mobile)
+  "@media only screen and (max-width: 767px)": mobileStyles,
+};
+//
 
 const buttonColors = {
   background: "linear-gradient(to right, #2493B3, #60BA5E)",

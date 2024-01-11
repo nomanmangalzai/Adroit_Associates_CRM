@@ -78,10 +78,13 @@ const Signup = () => {
   };
 
   return (
-    <Container className="container mt-5" style={containerDivStyle}>
+    <div
+      className="container mt-5 bg-gray-200 rounded-tr-3xl rounded-bl-3xl"
+      style={containerDivStyle}
+    >
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
-          <h1 className="text-center mt-3 font-serif">Signup</h1>
+          <h1 className="mt-3 font-serif text-center">Signup</h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -99,7 +102,7 @@ const Signup = () => {
                   type="text"
                   name="firstName"
                   placeholder="enter your first name"
-                  className="form-control font-mono "
+                  className="font-mono form-control "
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -117,7 +120,7 @@ const Signup = () => {
                   type="text"
                   name="lastName"
                   placeholder="enter your last name"
-                  className="form-control font-mono"
+                  className="font-mono form-control"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -135,7 +138,7 @@ const Signup = () => {
                   type="email"
                   name="email"
                   placeholder="enter your email address"
-                  className="form-control font-mono"
+                  className="font-mono form-control"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -153,7 +156,7 @@ const Signup = () => {
                   type="password"
                   name="password"
                   placeholder="password"
-                  className="form-control font-mono"
+                  className="font-mono form-control"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -171,7 +174,7 @@ const Signup = () => {
                   type="password"
                   name="confirmPassword"
                   placeholder="confirm password"
-                  className="placeholder-text-sm text-gray-500 form-control font-mono"
+                  className="font-mono text-gray-500 placeholder-text-sm form-control"
                   style={fieldStyle}
                 />
                 <ErrorMessage
@@ -184,7 +187,7 @@ const Signup = () => {
               <Button
                 type="submit"
                 variant="primary"
-                className="w-100 mt-3"
+                className="mt-3 w-100"
                 style={buttonColors}
               >
                 Signup
@@ -199,7 +202,7 @@ const Signup = () => {
           </Fade>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 
@@ -207,13 +210,8 @@ export default Signup;
 
 //
 const containerDivStyle = {
-  backgroundColor: "#f0f0f0",
-  width: "1250px",
-  height: "650px",
-  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
-  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
-  justifyContent: "center",
-  alignItems: "center",
+  // justifyContent: "center",
+  // alignItems: "center",
 };
 
 const buttonColors = {

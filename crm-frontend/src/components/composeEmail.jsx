@@ -145,11 +145,11 @@ Best regards,`;
   };
 
   return (
-    <div className="container" style={containerDivStyle}>
+    <div className="container w-12 pt-1 pb-12 mt-5 bg-gray-200 rounded-tr-3xl rounded-bl-3xl">
       <Container className="mt-5">
         <Row className="justify-content-center">
           <Col xs={12} md={6}>
-            <h1 className="text-center mb-4 mt-2">Send Email</h1>
+            <h1 className="mt-2 mb-4 text-center">Send Email</h1>
             <Fade in={showAlert}>
               <div className="mb-3">
                 {showAlert && (
@@ -291,14 +291,6 @@ Best regards,`;
 
 export default EmailForm;
 
-//
-const containerDivStyle = {
-  backgroundColor: "#f0f0f0",
-  width: "1053px",
-  height: "700px",
-  borderTopRightRadius: "50px", // Adjust the values for the desired curvature
-  borderBottomLeftRadius: "50px", // Adjust the values for the desired curvature
-};
 const buttonColors = {
   background: "linear-gradient(to right, #2493B3, #60BA5E)",
   height: " 58px",
